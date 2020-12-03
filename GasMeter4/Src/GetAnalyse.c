@@ -35,13 +35,17 @@ void GetAnalyse(uint8_t *ptRecData)
 	ptFindResult = strstr(ptStrStart,"200");
 	if(ptFindResult != NULL)
 	{
+//		printf("111\r\n");
 		ptJson = strstr(ptStrStart,"{");
 		
 		ptFindResult = NULL;
 		ptFindResult = strstr(ptStrStart,"STUP");
 		if(ptFindResult != NULL)   //GetMeterSetting 命令解析
 		{
-			xEventGroupSetBits(xGetCmdEventGroup, GET_CMD_STUP);
+			xEventGroupSetBits(xGetCmdEventGroup, GET_CMD_STUP_RESPONSE);
+//			printf("xGetCmdEventGroup = %d \r\n",(int)xEventGroupGetBits(xGetCmdEventGroup));
+			xEventGroupClearBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
+//			printf("xGetCmdEventGroup = %d \r\n",(int)xEventGroupGetBits(xGetCmdEventGroup));
 			json=cJSON_Parse(ptJson); //获取整个Json大的句柄
 			if(json != NULL)
 			{
@@ -120,8 +124,13 @@ void GetAnalyse(uint8_t *ptRecData)
 				
 				cJSON_Delete(json);
 			}
-		}		
+		}	
+     else
+		 {
+//			 printf("find not STUP\r\n");
+		 }			 
 		
 	}
+//	printf("find not 200\r\n");
 	
 }

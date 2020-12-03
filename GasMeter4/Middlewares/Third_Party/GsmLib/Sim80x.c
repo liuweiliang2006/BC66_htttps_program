@@ -738,7 +738,8 @@ void  Sim80x_BufferProcess(void)
 	BaseType_t xResult;
 	uint8_t u8AnalysisResult = 0;
 	static uint8_t u8ATNum=0;
-	EventBits_t ATDealValue = 0;
+	EventBits_t ATDealValue = 0 ;
+	EventBits_t GetFuncCheck = 0;
 //    strStart = (char*)&Sim80x.UsartRxBuffer[0];
 	while(1)
 	{
@@ -767,24 +768,31 @@ void  Sim80x_BufferProcess(void)
 				strStart = (char*)Sim80x.UsartRxBuffer;
 				printf("AT_NO.=%d,rec:%s\r\n",u8ATNum,&Sim80x.UsartRxBuffer[0]);
 				
-//				GetAnalyse(&Sim80x.UsartRxBuffer[0]);
-//				printf("u8ATNum %d \r\n",u8ATNum);
 				u8AnalysisResult=Send_AT_cmd[u8ATNum-1].pFun(NULL);
-//				printf("u8ATNum %d \r\n",u8ATNum);
-//				printf("u8AnalysisResult %d \r\n",u8AnalysisResult);
 				if(u8AnalysisResult != 0)
 				{
-//					printf("AT NO. %d is ok\r\n",u8ATNum);
 					Sim80x.AtCommand.FindAnswer = 1;
-					memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
+					
 					Sim80x.UsartRxIndex = 0;
 					Sim80x.Status.Busy=0;
+					
+					
+					GetFuncCheck = xEventGroupGetBits(xGetCmdEventGroup);
+//					printf("GetFuncCheck = %d \r\n",(int)GetFuncCheck);
+					if(GetFuncCheck != 0)
+					{
+//						printf("%d",u8ATNum);
+						if(u8ATNum == 29)
+						{
+//							printf(" meter get func");
+							GetAnalyse(&Sim80x.UsartRxBuffer[0]);
+						}
+					}	
+					memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
 					u8ATNum =0;
 					xSemaphoreGive(Semaphore_AT_Response);
-//					printf("answer is 1\r\n");
 				}
-//				u8ATNum = 0;	
-				
+
 				
 				taskEXIT_CRITICAL(); //退出临界区
 				break;

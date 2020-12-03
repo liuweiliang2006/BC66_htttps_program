@@ -314,6 +314,11 @@ static ErrorStatus SendGetCommand()
 	return SUCCESS;
 }
 
+void vApplicationIdleHook( void )
+{
+	HAL_IWDG_Refresh(&hiwdg);
+}
+
 //向AWS发送POST请求
 static ErrorStatus SendPostCommand()
 {
@@ -403,7 +408,7 @@ void BC66_HTTP_Init(void )
 			{
 //				if(CONFIG_Meter.NotHaveDog == false && IsNeedRestart == false)
 //				{
-						HAL_IWDG_Refresh(&hiwdg);
+//						HAL_IWDG_Refresh(&hiwdg);
 //				}
 				{
 					xEventGroupSetBits(BC66_AT_Deal, 1);//告知解析函数 有新的AT指令发送了
@@ -952,17 +957,17 @@ void EncodePostDataStru(char *url,char *postdata,char **data)
 	char data_length[4];
 	if(postdata != NULL)  //POST操作
 	{
-		myitoa(strlen(postdata) -2,data_length,20); //获取传输的数据部分的真实长度，去除\r\n两个字符
+		myitoa(strlen(postdata),data_length,10); //获取传输的数据部分的真实长度，去除\r\n两个字符
 		strcat(*data,"POST ");
 //		strcat(*data,url);
 		strncat(*data,url, strlen(url)-2);  //去除\r\n两个字符
 		strcat(*data," HTTP/1.1");
 		strcat(*data,"\r\n");//POST https://test.kop4.com/meter/warning/TZ00000131 HTTP/1.1
 		
-		strcat(*data,X_API_KEY);
+		strcat(*data,X_LOCALE);
 		strcat(*data,"\r\n");
 		
-		strcat(*data,X_LOCALE);
+		strcat(*data,X_API_KEY);
 		strcat(*data,"\r\n");
 		
 		strcat(*data,"Content-Type: application/json");
@@ -976,7 +981,8 @@ void EncodePostDataStru(char *url,char *postdata,char **data)
 		strcat(*data,"\r\n");
 		strcat(*data,"\r\n");
 		
-		strcat(*data,postdata);		
+		strcat(*data,postdata);
+//		strcat(*data,"\r\n");		
 		
 		strcat(*data,"\r\n");		//发送数据时的的回车键
 	}
@@ -1268,18 +1274,22 @@ void  PostMeterSettings(void)  //
 	char *cDataTime ;
 	volatile uint16_t u8UrlLength = 0;
 	char *ptMeterID;
+	char *ptPostDataStru;
 	CONFIG_Meter_t stReadMeterConfig;
 	
 //	M26_Sni_Init();
-	Send_AT_cmd[8].SendCommand =(char *)malloc(20);
-	Send_AT_cmd[14].SendCommand =(char *)malloc(20);
-	memset(Send_AT_cmd[8].SendCommand,0,20 *sizeof(char));
-	memset(Send_AT_cmd[14].SendCommand,0,20 *sizeof(char));
+	Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	memset(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	memset(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	
+	ptPostDataStru = (char *) malloc(1024*sizeof(char));
+	memset(ptPostDataStru,0,1024*sizeof(char));
 	
 	struSeverInfo = (struct SeverInfo *) malloc(sizeof(struct SeverInfo));
 	ptMeterID = (char *) malloc(sizeof(char)*50);
-	ptPostData = (char *) malloc(500 *sizeof(char));
-	memset(ptPostData,0,500 *sizeof(char));
+	ptPostData = (char *) malloc(700 *sizeof(char));
+	memset(ptPostData,0,700 *sizeof(char));
 	
 	printf("******PostMeterSettings******\r\n");
 	refreshSetupPacket(&SetupPacket);
@@ -1287,34 +1297,38 @@ void  PostMeterSettings(void)  //
 	
 	encodeSettingsPacket(&ptPostData,&SetupPacket); 
 	
+	
 	struSeverInfo->Sendsever = SEVER_URL;
 	u8UrlLength = strlen(struSeverInfo->Sendsever);
 	struSeverInfo->SeverVer = SEVER_VERSION;
 	struSeverInfo->CardID = "";
 	
-	strcat(ptMeterID,"meter/settings/");
+//	strcat(ptMeterID,"meter/settings/");
+	strcat(ptMeterID,"settings/");
 	strcat(ptMeterID,CONFIG_Meter.MeterNo);
 	struSeverInfo->MeterId = ptMeterID;
 //	struSeverInfo->MeterId = "meter/settings/TZ00000525";
 	ptUrl = Sever_Address_GET( struSeverInfo,"");
 	
-	Send_AT_cmd[9].SendCommand = ptUrl; //URL地址
+	Send_AT_cmd[URL_ADDR_ARRAY].SendCommand = ptUrl; //URL地址
 	u8UrlLength = strlen(ptUrl)-2;
-	CmdLength(u8UrlLength,9);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
-	
-	ptPost = Post_Data_Cmd( ptPostData);
-	Send_AT_cmd[15].SendCommand = ptPost;
-	u8UrlLength = strlen(ptPost)-2;
-	CmdLength(u8UrlLength,15);  //根据发送POST的长度
+	CmdLength(u8UrlLength,25);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
+//	printf("length = %d\r\n",strlen(ptPostData));
+	EncodePostDataStru(ptUrl,ptPostData,&ptPostDataStru);
+	Send_AT_cmd[POST_DATA_ARRAY].SendCommand = ptPostDataStru;
+	u8UrlLength = strlen(ptPostDataStru)-2;
+	printf("u8UrlLength = %d",u8UrlLength);
+	CmdLength(strlen(ptPostDataStru)-2,27);  //根据发送POST的长度
 	
 	SendPostCommand();
 	
 	free(ptMeterID);
 	free(struSeverInfo);
 	free(ptUrl);
-	free(ptPost);
-	free(Send_AT_cmd[8].SendCommand);
-	free(Send_AT_cmd[14].SendCommand);		
+//	free(ptPost);
+	free(ptPostDataStru);
+	free(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand);
+	free(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand);		
 	free(ptPostData);	
 	
 	printf("******end PostMeterSettings******\r\n");
@@ -1331,9 +1345,6 @@ void  GetMeterSettings(void)  //
 	volatile uint16_t u8UrlLength = 0;	
 	char *ptMeterID;
 	char *ptPostDataStru;
-	
-//	M26_Sni_Init();
-	
 	
 	Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
 	Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
@@ -1374,8 +1385,8 @@ void  GetMeterSettings(void)  //
 	free(ptUrl);
 //	free(ptPost);
 	free(ptPostDataStru);
-	free(Send_AT_cmd[8].SendCommand);
-	free(Send_AT_cmd[14].SendCommand);		
+	free(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand);
+	free(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand);		
 //	free(ptPostData);	
 	
 	printf("******end GetMeterSettings******\r\n");

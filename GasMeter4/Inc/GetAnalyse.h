@@ -15,6 +15,13 @@ extern bool IsSaveCONFIG_GPRS;
 extern bool IsSaveCALIBRATION;
 extern bool IsSaveFlowCALIBRATION;
 //用于指示GET标志组中需要处理的信息位
-#define GET_CMD_STUP  (1<<0)
+#define GET_CMD_STUP_RESPONSE  (1<<0)  //响应了get meter settings 请求
+#define GET_CMD_STUP_REQUIRE  (1<<1)  //发送了get meter settings 请求
+
+#define GET_CMD_CMD_RESPONSE  (1<<2)  //响应了get meter command 请求
+#define GET_CMD_CMD_REQUIRE  (1<<3)  //响应了get meter command 请求
+
+#define GET_CMD_UPDATA_RESPONSE  (1<<4)  //响应了get meter firmware 请求
+#define GET_CMD_UPDATA_REQUIRE  (1<<5)  //响应了get meter firmware 请求
 
 #endif 

@@ -111,7 +111,7 @@ typedef enum
 //######################################################################################################################
 typedef struct
 {
-    char                  SendCommand[512];
+    char                  SendCommand[1024];
     char                  ReceiveAnswer[10][64];
     uint32_t              SendCommandStartTime;
     uint32_t              ReceiveAnswerExeTime;
