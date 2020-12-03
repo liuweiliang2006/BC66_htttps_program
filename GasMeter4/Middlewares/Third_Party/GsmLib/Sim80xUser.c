@@ -51,7 +51,7 @@ void  Sim80x_GPRSClose(int16_t cStep)
 	
 		TimeForCurrStart=0;	
 		GSM_ON_FLAG = 0;
-		
+		Sim80x_SendAtCommand("AT+QSCLK=1\r\n",3000,1,"OK");
 //		if(connectStep == 11)
 //		{
 //			if(GPRS_CloseSocket() == true)

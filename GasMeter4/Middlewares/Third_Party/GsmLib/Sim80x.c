@@ -155,46 +155,22 @@ void  Sim80x_InitValue(void)
 	  uint8_t MaxLoop = 10;
 	  uint8_t Ishave = 0; 
     Sim80x_SendAtCommand("ATE1\r\n",200,1,"ATE1\r\r\nOK\r\n");              //ATE1 命令回复的时候带发送的,ATE0不带
-	  //Sim80x_SendAtCommand("AT+CGMI\r\n",200,1,""); // SIMCOM_Ltd
-	  
-	  do{
-			Ishave = Sim80x_SendAtCommand("AT+CGMM\r\n",500,1,"AT+CGMM");
-			MaxLoop--;
-		}while(MaxLoop > 0 && Ishave == 0);
-		
-		if(Sim80x.Modem_Type == SIM7020E)
-		{
-	    //Sim80x_SendAtCommand("AT+CBAND=1,3,5,8\r\n",200,1,"AT+CBAND=1,3,5,8\r\r\nOK\r\n"); //china
-	    Sim80x_SendAtCommand("AT+CBAND=20\r\n",200,1,"AT+CBAND=20\r\r\nOK\r\n"); //kenya
-		}
-//		if(Sim80x_SendAtCommand("AT+CGMM\r\n",200,1,"AT+CGMM\r\r\nSIM7020E\r\n\r\nOK\r\n") == 1)
-//		{
-//	    //Sim80x_SendAtCommand("AT+CBAND=1,3,5,8\r\n",200,1,"AT+CBAND=1,3,5,8\r\r\nOK\r\n"); //china
-//	    Sim80x_SendAtCommand("AT+CBAND=20\r\n",200,1,"AT+CBAND=20\r\r\nOK\r\n"); //kenya
-//		}
+	
+		Sim80x_SendAtCommand("AT+IPR=115200\r\n",200,1,"AT+IPR=115200\r\r\nOK\r\n");  		//设置波特率
+	
+		Sim80x_SendAtCommand("AT+QSCLK=0\r\n",200,1,"AT+QSCLK=0\r\r\nOK\r\n"); //关闭低功耗
+
+//	Sim80x_SendAtCommand("AT+QCSEARFCN\r\n",200,1,"OK\r\n");
+	    Sim80x_SendAtCommand("AT+QBAND=4,1,3,5,8\r\n",200,1,"AT+QBAND=4,1,3,5,8\r\r\nOK\r\n"); //china
+	
+//	Sim80x_SendAtCommand("AT+QBAND=1,20\r\n",200,1,"AT+QBAND=1,20\r\r\nOK\r\n"); //kenya
+
 	  osDelay(2000);
 	  Sim80x_SendAtCommand("AT+CPIN?\r\n",200,1,"\r\n+CPIN:");                 //查看SIM卡的状态
 	  osDelay(200);
-//    Sim80x_SendAtCommand("AT+COLP=1\r\n",200,1,"AT+COLP=1\r\r\nOK\r\n");  // 联络线确认陈述,貌似是确认打电话有没有接通 设置被叫号码显示
-//		osDelay(200);
-//    Sim80x_SendAtCommand("AT+CLIP=1\r\n",200,1,"AT+CLIP=1\r\r\nOK\r\n");  // 呼叫线确认陈述 懵逼啊 设置指示来电号码
-//		osDelay(200);
-//    Sim80x_SendAtCommand("AT+FSHEX=0\r\n",200,1,"AT+FSHEX=0\r\r\nOK\r\n");//
-//		osDelay(200);
-    Sim80x_SendAtCommand("AT+CGREG=1\r\n",200,1,"AT+CGREG=1\r\r\nOK\r\n");    //网络注册。获得手机的注册状态。
-		osDelay(200);
-//    Sim80x_SendAtCommand("AT+ECHO?\r\n",200,1,"\r\nOK\r\n");								//回音取消
 
-//    Gsm_MsgSetMemoryLocation(GsmMsgMemory_OnModule);///获取设备上支持存储短信的位置,如果有一个就认为是手机卡,没有手机卡会返回error
-//    Gsm_MsgSetFormat(GsmMsgFormat_Text);//CMGF设置短信的格式
-//    Gsm_MsgSetTextModeParameter(17,167,0,0);//CSMP设置短信的存储时间等
-//    Gsm_MsgGetCharacterFormat();//CSCS获取短信的字符集
-//    Gsm_MsgGetFormat();//CMGF获取短信的格式
-//    if(Sim80x.Gsm.MsgFormat != GsmMsgFormat_Text)
-//        Gsm_MsgSetFormat(GsmMsgFormat_Text);//CMGF设置短信的格式
-//    Gsm_MsgGetServiceNumber(); //短信服务中心地址
-//    Gsm_MsgGetTextModeParameter();//CSMP获取短信的存储时间等
-    Sim80x_GetIMEI(NULL);//获得 GSM  模块的 IMEI（国际移动设备标识）序列号
+		osDelay(200);
+
 		osDelay(800);
 //    Sim80x_GetLoadVol();//通话音量
 //    Sim80x_GetRingVol();//响铃音量
@@ -766,40 +742,49 @@ void  Sim80x_BufferProcess(void)
 	while(1)
 	{
 		xResult = xSemaphoreTake(Semaphore_Uart_Rec, (TickType_t)portMAX_DELAY);
+		printf("xResult %d\r\n",(int)xResult);
+//		xResult = xSemaphoreTake(Semaphore_Uart_Rec, (TickType_t)portMAX_DELAY);
+//		printf("xResult %d\r\n",(int)xResult);
+//		taskENTER_CRITICAL(); //进入临界区
 		if(xResult == pdTRUE)
-		{
 			if(CONFIG_Meter.NotHaveDog == false && IsNeedRestart == false)
 			{
 					HAL_IWDG_Refresh(&hiwdg);
 			}
-			xQueueReceive(SendATQueue, (void *)&u8ATNum, (TickType_t)0);
+			xQueueReceive(SendATQueue, (void *)&u8ATNum, (TickType_t)10);
+			
 			if(u8ATNum != 0) //该部分用于处理AWS HTTPS相关的接收解析
 			{
+				
+				taskENTER_CRITICAL(); //进入临界区
 				strStart = (char*)Sim80x.UsartRxBuffer;
 				printf("AT_NO.=%d,rec:%s\r\n",u8ATNum,&Sim80x.UsartRxBuffer[0]);
-				if((u8ATNum != 13) && (strstr(strStart,"DEACT"))) //特殊错误处理，部分指令失败M26自动返回
-				{
-					xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT);
-					printf("rec:xCreatedEventGroup %d \r\n",xEventGroupGetBits(xCreatedEventGroup));
-//					Sim80x.AtCommand.FindAnswer = 1;
-					break;
-				}
-//				printf("rec:%s\r\n",&Sim80x.UsartRxBuffer[0]);
-				GetAnalyse(&Sim80x.UsartRxBuffer[0]);
-				u8AnalysisResult=Send_AT_cmd[u8ATNum-1].pFun(NULL);
-				u8ATNum = 0;
-//				xQueueSend(SendATQueue,(void *) 0,(TickType_t)10);
-				if(u8AnalysisResult != 0)
-					Sim80x.AtCommand.FindAnswer = 1;
 				
-				memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
-				Sim80x.UsartRxIndex = 0;
-				Sim80x.Status.Busy=0;
+//				GetAnalyse(&Sim80x.UsartRxBuffer[0]);
+				printf("u8ATNum %d \r\n",u8ATNum);
+				u8AnalysisResult=Send_AT_cmd[u8ATNum-1].pFun(NULL);
+				printf("u8ATNum %d \r\n",u8ATNum);
+				printf("u8AnalysisResult %d \r\n",u8AnalysisResult);
+				if(u8AnalysisResult != 0)
+				{
+					printf("AT NO. %d is ok\r\n",u8ATNum);
+					Sim80x.AtCommand.FindAnswer = 1;
+					memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
+					Sim80x.UsartRxIndex = 0;
+					Sim80x.Status.Busy=0;
+				}
+//				u8ATNum = 0;	
+				
+				
+				taskEXIT_CRITICAL(); //退出临界区
+				break;
 			}
 			else if(u8ATNum == 0)
 			{
+				printf("not func\r\n");
 				strStart = (char*)Sim80x.UsartRxBuffer;
 				str1 = strstr(strStart,"\r\n+CGREG:");
+				str1 = strstr(strStart,"\r\n+CEREG:");//BC66 
 				if(str1!=NULL)
 				{
 						str1 = strchr(str1,',');
@@ -1272,6 +1257,7 @@ void  Sim80x_BufferProcess(void)
     }
     //##################################################
     str1 = strstr(strStart,"\r\nCONNECT OK\r\n");
+str1 = strstr(strStart,"+QIOPEN:");
     if(str1!=NULL)
     {
         if(Sim80x.GPRS.MultiConnection==0)
@@ -1381,7 +1367,7 @@ void  Sim80x_BufferProcess(void)
             Sim80x.AtCommand.ReceiveAnswerExeTime = HAL_GetTick()-Sim80x.AtCommand.SendCommandStartTime;
             break;
         }
-    }
+    }				
     //##################################################
     //---       Buffer Process
     //##################################################
@@ -1392,8 +1378,10 @@ void  Sim80x_BufferProcess(void)
     memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
     Sim80x.Status.Busy=0;
 			}
-		}		
+			
+//	taskEXIT_CRITICAL(); //退出临界区
 	}
+//	taskEXIT_CRITICAL(); //退出临界区		
   Sim80x.UsartRxIndex=0;    
 }
 

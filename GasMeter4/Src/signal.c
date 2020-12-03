@@ -3,15 +3,28 @@
 extern bool IsNeedRestart;
 QueueHandle_t SendATQueue = NULL; 			//用于表示当前正在与无线通讯模组
 SemaphoreHandle_t  Semaphore_Uart_Rec = NULL; //该信号量用于指示串口是否接收到完整数据帧
+SemaphoreHandle_t  Semaphore_AT_Response = NULL;
 EventGroupHandle_t xCreatedEventGroup = NULL;
 
 EventGroupHandle_t BC66_AT_EventGroup = NULL;
 
-#define SEVER_URL "https://ateei9d448.execute-api.eu-west-1.amazonaws.com/"
-#define SEVER_VERSION "testing/"
+//#define SEVER_URL "https://ateei9d448.execute-api.eu-west-1.amazonaws.com/"
+//#define SEVER_VERSION "testing/"
+#define SEVER_URL "https://test.kop4.com/"
+#define SEVER_VERSION "meter/"
+#define X_LOCALE "X-Locale:dev"
+#define X_API_KEY "X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20"
+#define HOST "test.kop4.com"
+
+
+#define URL_LENGTH_ARRAY 24 //at+qhttpurl=26 指令的数组下标
+#define URL_ADDR_ARRAY 25 	//URL的地址 指令的数组下标
+#define POST_LENGTH_ARRAY 26 //at+qhttppost=152 指令的数组下标
+#define POST_DATA_ARRAY 27 //POST数据的长度 指令的数组下标
 
 #define M26GETCOMMANDLEN 4
 #define M26POSTCOMMANDLEN 5
+#define BC66POSTCOMMANDLEN 5
 #define ANALYSIS_PRINT 1
 
 
@@ -55,6 +68,8 @@ stru_P4_command_t Send_AT_cmd[]={
 uint8_t u8GetNum[M26GETCOMMANDLEN]= {8,9,10,11};
 uint8_t u8PostNum[M26POSTCOMMANDLEN] = {8,9,14,15,11};
 uint8_t u8HTTPNum[3] = {6,7,13};
+uint8_t u8BC66PostNum[BC66POSTCOMMANDLEN] = {24,25,26,27,28};
+uint8_t u8BC66HTTPNum[5] = {19,20,21,22,23}; //用于HTTPS的初始化AT指令数组下标
 
 /* 实现itoa函数的源码 */ 
 static char *myitoa(int num,char *str,int radix) 
@@ -102,7 +117,12 @@ void AppObjCreate (void)
 		printf("Semaphore creat failed!\r\n");
 			/* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
 	}
-	
+	Semaphore_AT_Response  = xSemaphoreCreateBinary();
+	if(Semaphore_AT_Response == NULL)
+	{
+		printf("Semaphore creat failed!\r\n");
+			/* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
+	}	
 	SendATQueue = xQueueCreate(1, sizeof(uint8_t));
 	if( SendATQueue == 0 )
 	{
@@ -129,7 +149,7 @@ static char * Sever_Address_GET(const Stru_Sever_Info_t* SeverInfo,char* type)
 
 	ptUrlInfo = (char *) malloc(u8Lenth);
 	memset(ptUrlInfo,0,u8Lenth);
-	printf("malloc end\r\n");
+//	printf("malloc end\r\n");
 	u8Lenth = 0;
 	u8Lenth = strlen(SeverInfo->Sendsever);
 	if(u8Lenth != 0)
@@ -203,8 +223,8 @@ static void UrlLength(uint16_t length)
 }
 
 
-//AT+QHTTPURL 9
-//AT+QHTTPPOST  15
+//AT+QHTTPURL   25
+//AT+QHTTPPOST  27
 static void CmdLength(uint16_t urllength,uint8_t cmd_num)
 {
 	char ptUrlCharLength[4],chUrl[20];
@@ -212,7 +232,7 @@ static void CmdLength(uint16_t urllength,uint8_t cmd_num)
 	uint16_t i ;
 //	ptUrlCharLength = (char *) malloc(urllength+strlen(chUrl));
 	myitoa(urllength,ptUrlCharLength,10); 
-	if(cmd_num == Send_AT_cmd[8].u8CmdNum)  //如果需要填充AT+QHTTPURL指令
+	if(cmd_num == Send_AT_cmd[URL_LENGTH_ARRAY].u8CmdNum)  //如果需要填充AT+QHTTPURL指令
 	{
 		strcpy(chUrl,"AT+QHTTPURL=");
 		strcat(chUrl,ptUrlCharLength);
@@ -221,11 +241,11 @@ static void CmdLength(uint16_t urllength,uint8_t cmd_num)
 		for(i =0;i<strlen(chUrl);i++)
 		{
 			str = chUrl[i];
-			Send_AT_cmd[8].SendCommand[i] = str;
+			Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand[i] = str;
 		}
 	}
 
-	if(cmd_num == Send_AT_cmd[14].u8CmdNum)  //如果需要填充AT+QHTTPPOST=272
+	if(cmd_num == Send_AT_cmd[POST_LENGTH_ARRAY].u8CmdNum)  //如果需要填充AT+QHTTPPOST=272
 	{
 		strcpy(chUrl,"AT+QHTTPPOST=");
 		strcat(chUrl,ptUrlCharLength);
@@ -233,7 +253,7 @@ static void CmdLength(uint16_t urllength,uint8_t cmd_num)
 		for(i =0;i<strlen(chUrl);i++)
 		{
 			str = chUrl[i];
-			Send_AT_cmd[14].SendCommand[i] = str;
+			Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand[i] = str;
 		}
 	}	
 }
@@ -294,22 +314,23 @@ static ErrorStatus SendPostCommand()
 {
 	uint8_t i = 0;
 	uint8_t u8Lenth = 0;
+	BaseType_t xResult;
 	EventBits_t event_value = 0;
 	uint8_t u8ErrorFlag = 0;
 	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
 	xEventGroupClearBits( xCreatedEventGroup,0xffffff );
 //	for(i=0;i< sizeof(Send_AT_cmd)/sizeof(Send_AT_cmd[0]);i++)M26GETCOMMANDLEN
-	for(i=0;i< M26POSTCOMMANDLEN;i++)
+	for(i=0;i< BC66POSTCOMMANDLEN;i++)
 	{		
 			Sim80x.AtCommand.FindAnswer = 0;
-			printf("send:%d %s\r\n\r\n",Send_AT_cmd[u8PostNum[i]].u8CmdNum,Send_AT_cmd[u8PostNum[i]].SendCommand);
+			printf("send:%d %s\r\n\r\n",Send_AT_cmd[u8BC66PostNum[i]].u8CmdNum,Send_AT_cmd[u8BC66PostNum[i]].SendCommand);
 			while(!Sim80x.AtCommand.FindAnswer)
 			{				 
 				event_value = xEventGroupGetBits(xCreatedEventGroup);
 				if(event_value != 0)
 				{
 					printf("send event_value %d \r\n",event_value);
-					i = M26POSTCOMMANDLEN -1; //遇到AT指令的错误，则让使其在下一次循环当中让其断开
+					i = BC66POSTCOMMANDLEN -1; //遇到AT指令的错误，则让使其在下一次循环当中让其断开
 					xEventGroupClearBits( xCreatedEventGroup,0xffffff );
 					event_value = 0;
 					u8ErrorFlag = 1;
@@ -320,8 +341,16 @@ static ErrorStatus SendPostCommand()
 						HAL_IWDG_Refresh(&hiwdg);
 //				}
 				memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
-				xQueueSend(SendATQueue,(void *) &Send_AT_cmd[u8PostNum[i]].u8CmdNum,(TickType_t)10);
-				Sim80x_SendAtCommand(Send_AT_cmd[u8PostNum[i]].SendCommand,1000,1,"OK\r\n");
+				xQueueSend(SendATQueue,(void *) &Send_AT_cmd[u8BC66PostNum[i]].u8CmdNum,(TickType_t)10);
+				Sim80x_SendAtCommand(Send_AT_cmd[u8BC66PostNum[i]].SendCommand,1000,1,"OK\r\n");
+				xResult = xSemaphoreTake(Semaphore_AT_Response, (TickType_t)portMAX_DELAY);
+				
+				while(!xResult)
+				{
+					printf("waitting ...%d\r\n",xResult);
+					xSemaphoreTake(Semaphore_AT_Response, (TickType_t)portMAX_DELAY);
+				}
+				printf("wait end \r\n");
 //				osDelay(1000);	
 //				if( i == M26POSTCOMMANDLEN -1)
 //				{
@@ -368,6 +397,32 @@ void M26_HTTP_Init(void )
 			}
 		}		
 	}
+}
+
+void BC66_HTTP_Init(void )
+{
+	uint8_t i = 0;
+	for(i = 0;i < 5;i++)
+	{
+		{
+			printf("send %s\r\n\r\n",Send_AT_cmd[u8BC66HTTPNum[i]].SendCommand);
+			Sim80x.AtCommand.FindAnswer = 0;
+			xQueueSend(SendATQueue,(void *) &Send_AT_cmd[u8BC66HTTPNum[i]].u8CmdNum,(TickType_t)10);	 
+//			Sim80x_SendAtCommand(Send_AT_cmd[u8SniNum[i]].SendCommand,1000,1,"AT\r\r\nOK\r\n");
+//			osDelay(2000);
+			while(!Sim80x.AtCommand.FindAnswer)
+			{
+//				if(CONFIG_Meter.NotHaveDog == false && IsNeedRestart == false)
+//				{
+						HAL_IWDG_Refresh(&hiwdg);
+//				}
+				{
+					Sim80x_SendAtCommand(Send_AT_cmd[u8BC66HTTPNum[i]].SendCommand,1000,1,"OK\r\n");
+					osDelay(2000);
+				}				
+			}
+		}		
+	}	
 }
 //######################################################################################################################
 //AT 指令错误处理
@@ -646,20 +701,7 @@ uint8_t Analysis_QHTTPURL_Cmd(char *pdata)
 
 uint8_t Analysis_QHTTPGET_Cmd(char *pdata)
 {
-	char *ptStrStart ;
-	char *ptFindResult ;
-	ptStrStart = (char*)Sim80x.UsartRxBuffer;
-	ptFindResult = strstr(ptStrStart,"OK");
-	if(ptFindResult != NULL)
-	{
-		return 1;
-	}	
-	ptFindResult = strstr(ptStrStart,"ERROR");
-	if(ptFindResult != NULL)
-	{
-		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QHTTPGET_BIT);
-		return 0;
-	}	
+
 	return 0;
 }
 
@@ -667,77 +709,19 @@ uint8_t Analysis_QHTTPGET_Cmd(char *pdata)
 //正确返回1，错误返回0。
 uint8_t Analysis_QHTTPREAD_Cmd(char *pdata)
 {
-	char *ptStrStart ;
-	char *ptFindResult ;
 	
-	ptStrStart = (char*)Sim80x.UsartRxBuffer;
-	ptFindResult = strstr(ptStrStart,"OK");
-	if(ptFindResult != NULL)
-	{
-		return 1;
-	}	
-	ptFindResult = strstr(ptStrStart,"ERROR");
-	if(ptFindResult != NULL)
-	{
-		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QHTTPREAD_BIT);
-		return 1;
-	}	
 	return 0;
 }
 
 uint8_t Analysis_QIDEACT_Cmd(char *pdata)
 {
-	char *ptStrStart ;
-	char *ptFindResult ;
-	static uint8_t u8ErrorCnt = 0;
-	ptStrStart = (char*)Sim80x.UsartRxBuffer;
-	ptFindResult = strstr(ptStrStart,"OK");
-	if((ptFindResult != NULL) )
-	{
-		#ifdef ANALYSIS_PRINT
-		printf("QIDEACT OK find!\r\n");
-		#endif		
-		u8ErrorCnt = 0;
-		return 1;
-	}
-	ptFindResult = strstr(ptStrStart,"ERROR");
-	if(ptFindResult != NULL)
-	{
-		u8ErrorCnt ++;
-		if(u8ErrorCnt == 5)
-		{
-		#ifdef ANALYSIS_PRINT
-		printf("QIDEACT ERR !\r\n");
-		#endif			
-			u8ErrorCnt = 0;
-			xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QIDEACT_BIT);
-		}
-	}
+
 	return 0;
 }
 
 uint8_t Analysis_QHTTPCFG_Cmd(char *pdata)
 {
-	char *ptStrStart ;
-	char *ptFindResult ;
-	static uint8_t u8ErrorCnt = 0;
-	ptStrStart = (char*)Sim80x.UsartRxBuffer;
-	ptFindResult = strstr(ptStrStart,"OK");
-	if((ptFindResult != NULL) || (u8ErrorCnt == 10))
-	{
-		u8ErrorCnt = 0;
-		return 1;
-	}
-	ptFindResult = strstr(ptStrStart,"ERROR");
-	if(ptFindResult != NULL)
-	{
-		u8ErrorCnt ++;
-		if(u8ErrorCnt == 5)
-		{
-			u8ErrorCnt = 0;
-			xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QIDEACT_BIT);
-		}
-	}
+
 	return 0;
 }
 
@@ -745,6 +729,7 @@ uint8_t Analysis_QHTTPCFG_Cmd(char *pdata)
 
 /**************follow is bc66 AT command analysis function******************************/
 //AT+QSCLK=0 低功耗解析函数处理
+#define BC66_ANALYSIS_DEBUG 1
 uint8_t BC66_Analysis_QSCLK_Cmd(char *pdata)
 {
 	return 0;
@@ -752,21 +737,117 @@ uint8_t BC66_Analysis_QSCLK_Cmd(char *pdata)
 
 uint8_t BC66_Analysis_QSSLCFG_Cmd(char *pdata)
 {
+	char *ptStrStart ;
+	char *ptFindResult ;
+	#if 	BC66_ANALYSIS_DEBUG
+	printf("QSSLCFG analysis\r\n");
+	#endif
+	
+	ptStrStart = (char*)Sim80x.UsartRxBuffer;
+	ptFindResult = strstr(ptStrStart,"OK");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 1\r\n");
+		#endif
+		return 1;
+	}	
+	
+	ptFindResult = strstr(ptStrStart,"ERROR");
+	if(ptFindResult != NULL)
+	{
+		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QSSLCFG_BIT);
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
+		return 0;
+	}	
 	return 0;
 }
 
 uint8_t BC66_Analysis_QHTTPCFG_Cmd(char *pdata)
 {
+	char *ptStrStart ;
+	char *ptFindResult ;
+	#if 	BC66_ANALYSIS_DEBUG
+	printf("qhttpcfg analysis\r\n");
+	#endif
+	ptStrStart = (char*)Sim80x.UsartRxBuffer;
+	ptFindResult = strstr(ptStrStart,"OK");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 1\r\n");
+		#endif
+		return 1;
+	}	
+	
+	ptFindResult = strstr(ptStrStart,"ERROR");
+	if(ptFindResult != NULL)
+	{
+		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QSSLCFG_BIT);
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
+		return 0;
+	}	
 	return 0;
 }
 
 uint8_t BC66_Analysis_QHTTPURL_Cmd(char *pdata)
 {
+	char *ptStrStart ;
+	char *ptFindResult ;
+	
+	ptStrStart = (char*)Sim80x.UsartRxBuffer;
+	#if 	BC66_ANALYSIS_DEBUG
+	printf("QHTTPURL analysis\r\n");
+	printf("%s\r\n",ptStrStart);
+	#endif
+	ptFindResult = strstr(ptStrStart,">");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("has find >\r\n");
+		#endif
+		xSemaphoreGive(Semaphore_AT_Response);
+		return 1;
+	}	
+	
+	ptFindResult = strstr(ptStrStart,"ERROR");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
+		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QSSLCFG_BIT);
+		return 0;
+	}		
 	return 0;
 }
 
 uint8_t BC66_Analysis_POSTDATA_Cmd(char *pdata)
 {
+	char *ptStrStart ;
+	char *ptFindResult ;
+	ptStrStart = (char*)Sim80x.UsartRxBuffer;
+	ptFindResult = strstr(ptStrStart,"+QHTTPPOST:");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 1\r\n");
+		#endif
+		return 1;
+	}	
+	ptFindResult = strstr(ptStrStart,"ERROR");
+	if(ptFindResult != NULL)
+	{
+		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | POSTDATA_BIT);
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
+		return 0;
+	}	
 	return 0;
 }
 
@@ -784,6 +865,9 @@ uint8_t BC66_Analysis_SEVER_Addr_Cmd(char *pdata)
 	ptFindResult = strstr(ptStrStart,"OK");
 	if(ptFindResult != NULL)
 	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 1\r\n");
+		#endif
 		return 1;
 	}
 	
@@ -791,6 +875,9 @@ uint8_t BC66_Analysis_SEVER_Addr_Cmd(char *pdata)
 	if(ptFindResult != NULL)
 	{
 		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | SEVERADDR_BIT);
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
 		return 0;
 	}		
 	return 0;
@@ -798,7 +885,91 @@ uint8_t BC66_Analysis_SEVER_Addr_Cmd(char *pdata)
 
 uint8_t BC66_Analysis_QHTTPPOST_Cmd(char *pdata)
 {
+	char *ptStrStart ;
+	char *ptFindResult ;
+	#if 	BC66_ANALYSIS_DEBUG
+	printf("qhttpcfg analysis\r\n");
+	#endif
+	ptStrStart = (char*)Sim80x.UsartRxBuffer;
+	ptFindResult = strstr(ptStrStart,">");
+	if(ptFindResult != NULL)
+	{
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 1\r\n");
+		#endif
+		return 1;
+	}	
+	
+	ptFindResult = strstr(ptStrStart,"ERROR");
+	if(ptFindResult != NULL)
+	{
+		xEventGroupSetBits(xCreatedEventGroup, ALL_AT_BIT | QSSLCFG_BIT);
+		#if 	BC66_ANALYSIS_DEBUG
+		printf("return 0\r\n");
+		#endif
+		return 0;
+	}		
 	return 0;
+}
+
+//url:
+//postdata 不包括头的数据
+//data:格式化的（包括头与数据内容），放入此地址
+void EncodePostDataStru(char *url,char *postdata,char **data)
+{
+//	char data[1024] = {0};
+	char data_length[4];
+	if(postdata != NULL)  //POST操作
+	{
+		myitoa(strlen(postdata) -2,data_length,20); //获取传输的数据部分的真实长度，去除\r\n两个字符
+		strcat(*data,"POST ");
+		strcat(*data,url);
+		strcat(*data," HTTP/1.1");
+		strcat(*data,"\r\n");//POST https://test.kop4.com/meter/warning/TZ00000131 HTTP/1.1
+		
+		strcat(*data,X_API_KEY);
+		strcat(*data,"\r\n");
+		
+		strcat(*data,X_LOCALE);
+		strcat(*data,"\r\n");
+		
+		strcat(*data,"Content-Type: application/json");
+		strcat(*data,"\r\n");
+		
+		strcat(*data,HOST);
+		strcat(*data,"\r\n");
+		
+		strcat(*data,"Content-Length:");
+		strcat(*data,data_length);
+		strcat(*data,"\r\n");
+		strcat(*data,"\r\n");
+		
+		strcat(*data,postdata);		
+		
+		strcat(*data,"\r\n");		//发送数据时的的回车键
+	}
+	else //GET操作
+	{
+		strcat(*data,"GET ");
+		strcat(*data,url);
+		strcat(*data," HTTP/1.1");
+		strcat(*data,"\r\n");//GET https://test.kop4.com/meter/command/TZ00000235 HTTP/1.1
+		
+		strcat(*data,X_API_KEY);
+		strcat(*data,"\r\n");
+		
+		strcat(*data,X_LOCALE);
+		strcat(*data,"\r\n");
+		
+		strcat(*data,HOST);
+		strcat(*data,"\r\n");		
+		
+		strcat(*data,"\r\n");	
+		strcat(*data,"\r\n");	
+		
+		strcat(*data,"\r\n"); //发送数据时的的回车键
+	}
+
 }
 
 
@@ -1127,12 +1298,18 @@ void  GetMeterSettings(void)  //
 	char *cDataTime ;
 	volatile uint16_t u8UrlLength = 0;	
 	char *ptMeterID;
+	char *ptPostDataStru;
 	
 //	M26_Sni_Init();
-	Send_AT_cmd[8].SendCommand =(char *)malloc(20);
-	Send_AT_cmd[14].SendCommand =(char *)malloc(20);
-	memset(Send_AT_cmd[8].SendCommand,0,20 *sizeof(char));
-	memset(Send_AT_cmd[14].SendCommand,0,20 *sizeof(char));
+	
+	
+	Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	memset(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	memset(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	
+	ptPostDataStru = (char *) malloc(1024*sizeof(char));
+	memset(ptPostDataStru,0,1024*sizeof(char));
 	
 	struSeverInfo = (struct SeverInfo *) malloc(sizeof(struct SeverInfo));
 	ptMeterID = (char *) malloc(sizeof(char)*50);
@@ -1144,23 +1321,27 @@ void  GetMeterSettings(void)  //
 	struSeverInfo->Sendsever = SEVER_URL;
 	u8UrlLength = strlen(struSeverInfo->Sendsever);
 	struSeverInfo->SeverVer = SEVER_VERSION;
-	struSeverInfo->CardID = "";
-	strcat(ptMeterID,"meter/settings/");
+	struSeverInfo->CardID = ""; //此字段为空，无card_id
+	strcat(ptMeterID,"settings/");
 	strcat(ptMeterID,CONFIG_Meter.MeterNo);
-//	struSeverInfo->MeterId = "meter/settings/TZ00000525";
+//	struSeverInfo->MeterId = "/settings/TZ00000525";
 	struSeverInfo->MeterId = ptMeterID;
 	ptUrl = Sever_Address_GET( struSeverInfo,"");
 	
-	Send_AT_cmd[9].SendCommand = ptUrl; //URL地址
+	Send_AT_cmd[URL_ADDR_ARRAY].SendCommand = ptUrl; //URL地址
 	u8UrlLength = strlen(ptUrl)-2;
-	CmdLength(u8UrlLength,9);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
-		
-	SendGetCommand();
+	CmdLength(u8UrlLength,25);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX
+	
+	EncodePostDataStru(ptUrl,NULL,&ptPostDataStru);
+	Send_AT_cmd[POST_DATA_ARRAY].SendCommand = ptPostDataStru;
+	CmdLength(strlen(ptPostDataStru)-2,27);  //根据发送POST的长度
+	SendPostCommand();
 	
 	free(ptMeterID);
 	free(struSeverInfo);
 	free(ptUrl);
 //	free(ptPost);
+	free(ptPostDataStru);
 	free(Send_AT_cmd[8].SendCommand);
 	free(Send_AT_cmd[14].SendCommand);		
 //	free(ptPostData);	

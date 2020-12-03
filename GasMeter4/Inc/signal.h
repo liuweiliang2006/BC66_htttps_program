@@ -31,6 +31,8 @@
 #define BC66_QHTTPURL_BIT 			(1<<3) 	//at+qhttpurl=46
 #define BC66_QHTTPPOST_BIT 			(1<<4) 	//at+qhttppost=152
 #define BC66_QHTTPREAD_BIT 			(1<<5) 	//at+qhttpread=1024
+#define BC66_SEVERADDR_BIT 			(1<<6)	//URL address
+#define BC66_POSTDATA_BIT 			(1<<7)	//APOSTDATA
 
 #define BC66_ALL_AT_BIT					(1<<23) //有任意一AT指令错误，该位置位
 /********************end BC66 command**************************/
@@ -57,10 +59,12 @@ typedef struct ATInfo{
 extern stru_P4_command_t Send_AT_cmd[];
 extern QueueHandle_t SendATQueue;
 extern SemaphoreHandle_t  Semaphore_Uart_Rec;
+extern SemaphoreHandle_t  Semaphore_AT_Response;
 extern EventGroupHandle_t xCreatedEventGroup;  //事件标志组，用于指示AT指令的错误，遇错误置相应位
 extern EventGroupHandle_t BC66_AT_EventGroup;  //BC66 AT指令事件标志
 void AppObjCreate (void);
 void M26_HTTP_Init(void );
+void BC66_HTTP_Init(void );
 void  PostCookingSecsion(void);
 void  PostMeterStatus(void);
 void  PostMeterWarning(void);

@@ -351,13 +351,14 @@ bool  GPRS_StartUpGPRS(void)
 void  GPRS_GetLocalIP(char *IP)
 {
     uint8_t answer;
+	answer = Sim80x_SendAtCommand("AT+CGPADDR\r\n",1000,2,"\r\nOK\r\n","\r\nERROR\r\n");
 	if(Sim80x.Modem_Type == Quectel_M26)
 	{
-			answer = Sim80x_SendAtCommand("AT+QILOCIP\r\n",1000,2,"\r\nOK\r\n","\r\nERROR\r\n");
+//			answer = Sim80x_SendAtCommand("AT+QILOCIP\r\n",1000,2,"\r\nOK\r\n","\r\nERROR\r\n");
 	}
 	else
 	{
-    	answer = Sim80x_SendAtCommand("AT+CIFSR\r\n",1000,2,"\r\nOK\r\n","\r\nERROR\r\n");
+//    	answer = Sim80x_SendAtCommand("AT+CIFSR\r\n",1000,2,"\r\nOK\r\n","\r\nERROR\r\n");
 	}
     if((IP!=NULL) && (answer==1))
         strcpy(IP,Sim80x.GPRS.LocalIP);
@@ -372,13 +373,14 @@ void  GPRS_GetLocalIP(char *IP)
 bool  GPRS_ShowGPRSIPD()
 {
     uint8_t answer;
+	answer = Sim80x_SendAtCommand("AT+QICFG=\"showlength\",1\r\n",2000,1,"\r\nOK\r\n");
 	if(Sim80x.Modem_Type == Quectel_M26)
 	{
-			answer = Sim80x_SendAtCommand("AT+QIHEAD=1\r\n",2000,1,"\r\nOK\r\n");
+//			answer = Sim80x_SendAtCommand("AT+QIHEAD=1\r\n",2000,1,"\r\nOK\r\n");
 	}
 	else
 	{
-    	answer = Sim80x_SendAtCommand("AT+CIPHEAD=1\r\n",2000,1,"\r\nOK\r\n");
+//    	answer = Sim80x_SendAtCommand("AT+CIPHEAD=1\r\n",2000,1,"\r\nOK\r\n");
 	}
     if(answer == 1)
     {

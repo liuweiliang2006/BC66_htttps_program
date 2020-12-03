@@ -1,0 +1,3 @@
+git remote add origin git@github.com:liuweiliang2006/BC66_htttps_program.git
+git branch -M main
+git push -u origin main
