@@ -2463,8 +2463,9 @@ void StartDefaultTask(void const * argument)
 //									HAL_IWDG_Refresh(&hiwdg);
 //									PostCookingSecsion();
 									/************************send meter setting require*************************************/
-									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
-									GetMeterSettings();
+//									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
+//									GetMeterSettings();
+									PostMeterWarning(); 
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
 									if(u32GetCmdValue & GET_CMD_STUP_RESPONSE)
 									{

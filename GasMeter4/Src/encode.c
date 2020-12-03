@@ -219,8 +219,11 @@ void encodeWarningsPacket(char **sendMeagess,waringPacket_t *rPacket)
 	
 	strcat(*sendMeagess,"\"lowBattery\":");
 //	strcat(*sendMeagess,rPacket->Low_battery);
-	sscanf(lowbattery,"%.2f",CONFIG_Meter.LowBattery);
-	strcat(*sendMeagess,lowbattery);
+//	printf("WarnBattery %.1f\r\n",CONFIG_Meter.LowBattery);
+	sprintf(lowbattery,"%f",CONFIG_Meter.LowBattery);
+//	printf("WarnBattery %.1f\r\n",CONFIG_Meter.LowBattery);
+
+	strncat(*sendMeagess,lowbattery,3);
 	strcat(*sendMeagess,",");
 	
 	strcat(*sendMeagess,"\"gasTemperature\":");
