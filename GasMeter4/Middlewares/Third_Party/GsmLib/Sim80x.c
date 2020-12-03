@@ -736,13 +736,14 @@ void  Sim80x_BufferProcess(void)
 	char      *strStart,*str1,*str2;
 	int32_t   tmp_int32_t;
 	BaseType_t xResult;
-	uint8_t u8ATNum=0,u8AnalysisResult = 0;
-
+	uint8_t u8AnalysisResult = 0;
+	static uint8_t u8ATNum=0;
+	EventBits_t ATDealValue = 0;
 //    strStart = (char*)&Sim80x.UsartRxBuffer[0];
 	while(1)
 	{
 		xResult = xSemaphoreTake(Semaphore_Uart_Rec, (TickType_t)portMAX_DELAY);
-		printf("xResult %d\r\n",(int)xResult);
+//		printf("xResult %d\r\n",(int)xResult);
 //		xResult = xSemaphoreTake(Semaphore_Uart_Rec, (TickType_t)portMAX_DELAY);
 //		printf("xResult %d\r\n",(int)xResult);
 //		taskENTER_CRITICAL(); //进入临界区
@@ -751,7 +752,13 @@ void  Sim80x_BufferProcess(void)
 			{
 					HAL_IWDG_Refresh(&hiwdg);
 			}
-			xQueueReceive(SendATQueue, (void *)&u8ATNum, (TickType_t)10);
+			ATDealValue = xEventGroupGetBits(BC66_AT_Deal);
+//			printf("rec AT BC66_AT_Deal = %d\r\n",xEventGroupGetBits(BC66_AT_Deal));
+			if(ATDealValue != 0)
+			{
+				xQueueReceive(SendATQueue, (void *)&u8ATNum, (TickType_t)10);
+				xEventGroupClearBits(BC66_AT_Deal,1);
+			}			
 			
 			if(u8ATNum != 0) //该部分用于处理AWS HTTPS相关的接收解析
 			{
@@ -761,17 +768,20 @@ void  Sim80x_BufferProcess(void)
 				printf("AT_NO.=%d,rec:%s\r\n",u8ATNum,&Sim80x.UsartRxBuffer[0]);
 				
 //				GetAnalyse(&Sim80x.UsartRxBuffer[0]);
-				printf("u8ATNum %d \r\n",u8ATNum);
+//				printf("u8ATNum %d \r\n",u8ATNum);
 				u8AnalysisResult=Send_AT_cmd[u8ATNum-1].pFun(NULL);
-				printf("u8ATNum %d \r\n",u8ATNum);
-				printf("u8AnalysisResult %d \r\n",u8AnalysisResult);
+//				printf("u8ATNum %d \r\n",u8ATNum);
+//				printf("u8AnalysisResult %d \r\n",u8AnalysisResult);
 				if(u8AnalysisResult != 0)
 				{
-					printf("AT NO. %d is ok\r\n",u8ATNum);
+//					printf("AT NO. %d is ok\r\n",u8ATNum);
 					Sim80x.AtCommand.FindAnswer = 1;
 					memset(Sim80x.UsartRxBuffer,0,_SIM80X_BUFFER_SIZE);
 					Sim80x.UsartRxIndex = 0;
 					Sim80x.Status.Busy=0;
+					u8ATNum =0;
+					xSemaphoreGive(Semaphore_AT_Response);
+//					printf("answer is 1\r\n");
 				}
 //				u8ATNum = 0;	
 				

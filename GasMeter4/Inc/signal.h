@@ -32,7 +32,7 @@
 #define BC66_QHTTPPOST_BIT 			(1<<4) 	//at+qhttppost=152
 #define BC66_QHTTPREAD_BIT 			(1<<5) 	//at+qhttpread=1024
 #define BC66_SEVERADDR_BIT 			(1<<6)	//URL address
-#define BC66_POSTDATA_BIT 			(1<<7)	//APOSTDATA
+#define BC66_POSTDATA_BIT 			(1<<7)	//AT POSTDATA
 
 #define BC66_ALL_AT_BIT					(1<<23) //有任意一AT指令错误，该位置位
 /********************end BC66 command**************************/
@@ -62,6 +62,7 @@ extern SemaphoreHandle_t  Semaphore_Uart_Rec;
 extern SemaphoreHandle_t  Semaphore_AT_Response;
 extern EventGroupHandle_t xCreatedEventGroup;  //事件标志组，用于指示AT指令的错误，遇错误置相应位
 extern EventGroupHandle_t BC66_AT_EventGroup;  //BC66 AT指令事件标志
+extern EventGroupHandle_t BC66_AT_Deal;//用于指示当前的AT指令是否被处理
 void AppObjCreate (void);
 void M26_HTTP_Init(void );
 void BC66_HTTP_Init(void );
