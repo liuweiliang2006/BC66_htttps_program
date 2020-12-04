@@ -2463,12 +2463,12 @@ void StartDefaultTask(void const * argument)
 //									HAL_IWDG_Refresh(&hiwdg);
 //									PostCookingSecsion();
 									/************************send meter setting require*************************************/
+									
+									
+									PostCookingSecsion();
+									
 									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
 									GetMeterSettings();
-									PostMeterWarning(); 
-									PostCookingSecsion();
-									PostMeterStatus();
-									PostMeterHardware();
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
 									if(u32GetCmdValue & GET_CMD_STUP_RESPONSE)
 									{
@@ -2476,9 +2476,8 @@ void StartDefaultTask(void const * argument)
 										PostMeterSettings();
 									}
 									/****************************************************************/
-//									PostMeterHardware();
-//									PostMeterStatus();
-//									HAL_IWDG_Refresh(&hiwdg);
+									PostMeterStatus();
+									PostMeterHardware();
 									LL_VCC(1);
 								}
 //								else if(IsNeedTimeing ==  true) //PostCookingSecsion
@@ -2504,7 +2503,7 @@ void StartDefaultTask(void const * argument)
 								else if(IsNeedWarning == true)//±¨¾¯ÐÅÏ¢ PostMeterWarning
 								{
 									printf("send PostMeterWarning!\r\n");
-									M26_HTTP_Init();
+									BC66_HTTP_Init();
 									PostMeterWarning(); 
 									printf("end PostMeterWarning!\r\n");
 //									__HAL_RCC_WWDG_CLK_ENABLE();

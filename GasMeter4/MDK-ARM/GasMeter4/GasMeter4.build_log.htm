@@ -27,8 +27,77 @@ Project File Date:  11/30/2020
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'GasMeter4_APP1'
+compiling signal.c...
+../Inc/GetAnalyse.h(27): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Src\signal.c(221): warning:  #940-D: missing return statement at end of non-void function "Post_Data_Cmd" 
+  }
+..\Src\signal.c(281): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
+  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
+..\Src\signal.c(327): warning:  #177-D: variable "u8Lenth"  was declared but never referenced
+  	uint8_t u8Lenth = 0;
+..\Src\signal.c(328): warning:  #177-D: variable "xResult"  was declared but never referenced
+  	BaseType_t xResult;
+..\Src\signal.c(331): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
+  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
+..\Src\signal.c(399): warning:  #177-D: variable "xResult"  was declared but never referenced
+  	BaseType_t xResult;
+..\Src\signal.c(1019): warning:  #177-D: variable "result"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1019): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1020): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1130): warning:  #223-D: function "refreshReportStatePacket" declared implicitly
+  	refreshReportStatePacket(&reportStatePacket);		
+..\Src\signal.c(1106): warning:  #177-D: variable "result"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1106): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1107): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1109): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1172): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1174): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1239): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1241): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1305): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1307): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1311): warning:  #177-D: variable "stReadMeterConfig"  was declared but never referenced
+  	CONFIG_Meter_t stReadMeterConfig;
+..\Src\signal.c(1377): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1434): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(207): warning:  #177-D: function "Post_Data_Cmd"  was declared but never referenced
+  static char * Post_Data_Cmd(char *postdata)
+..\Src\signal.c(224): warning:  #177-D: function "UrlLength"  was declared but never referenced
+  static void UrlLength(uint16_t length)
+..\Src\signal.c(277): warning:  #177-D: function "SendGetCommand"  was declared but never referenced
+  static ErrorStatus SendGetCommand()
+..\Src\signal.c: 32 warnings, 0 errors
+linking...
+Program Size: Code=92036 RO-data=1968 RW-data=916 ZI-data=26852  
+FromELF: creating hex file...
 After Build - User command #2: fromelf --bin -o "GasMeter4\GasMeter4.bin" "GasMeter4\GasMeter4.axf"
-"GasMeter4\GasMeter4.axf" - 0 Error(s), 0 Warning(s).
+"GasMeter4\GasMeter4.axf" - 0 Error(s), 32 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,7 +120,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
