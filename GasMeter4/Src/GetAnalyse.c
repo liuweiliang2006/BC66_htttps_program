@@ -126,59 +126,82 @@ void GetAnalyse(uint8_t *ptRecData)
 				cJSON_Delete(json);
 			}
 		}	
-		
+/*******************************/
+//{
+//	"statusCode":"CommandFound-200",
+//	"message":
+//	{
+//		"commandId":"R5C4V8qUZdxuU4a",
+//		"credit":"ADD",
+//		"meterID":"TZ00001911",
+//		"amount":"1234.00",
+//		"lpgDensity":2.525,
+//		"paymentDate":"2020-11-03T10:04:00.000Z",
+//		"unitPrice":"42226.00",
+//		"command":"ADMO",
+//		"cardId":201910150000000500,
+//		"customerId":"7066738",
+//		"isRead":false
+//		}
+//}		
+/*****************************/		
 		ptFindResult = strstr(ptStrStart,"ADMO");
 		if(ptFindResult != NULL)   //GetMeterCommand 命令解析
 		{
 			xEventGroupSetBits(xGetCmdEventGroup, GET_CMD_CMD_RESPONSE);
-//			printf("xGetCmdEventGroup = %d \r\n",(int)xEventGroupGetBits(xGetCmdEventGroup));
-			xEventGroupClearBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
-//			printf("xGetCmdEventGroup = %d \r\n",(int)xEventGroupGetBits(xGetCmdEventGroup));
+			xEventGroupClearBits(xGetCmdEventGroup,GET_CMD_CMD_REQUIRE);
 			json=cJSON_Parse(ptJson); //获取整个Json大的句柄
 			if(json != NULL)
 			{
 				test_arr = cJSON_GetObjectItem(json,"message");
 				
-				item = cJSON_GetObjectItem(test_arr,"meterId"); 					//meterId": "TZ00000525", length should be 10
+				item = cJSON_GetObjectItem(test_arr,"meterId"); 					//"meterID":"TZ00001911",, length should be 10
 				memcpy(Value,item->valuestring,strlen(item->valuestring));
 				strncpy(RechargePacket.meterNumer ,Value,strlen(Value));
 				memset(Value,0,REC_COM_LEN);
 				
-				item = cJSON_GetObjectItem(test_arr,"customerId"); 					//"customerId": "212137868",length should be 7
+				item = cJSON_GetObjectItem(test_arr,"customerId"); 					//"customerId":"7066738",,length should be 7
 				memcpy(Value,item->valuestring,strlen(item->valuestring));
 				strncpy(RechargePacket.CUSTOMER_ID ,Value,strlen(Value));
 				memset(Value,0,REC_COM_LEN);
 				
-//				item = cJSON_GetObjectItem(test_arr,"command"); 					//"command": "ADMO",
+//				item = cJSON_GetObjectItem(test_arr,"command"); 					//"command":"ADMO",
 //				memcpy(Value,item->valuestring,strlen(item->valuestring));
 //				strncpy(RechargePacket. ,Value,strlen(Value));
 //				memset(Value,0,REC_COM_LEN);
 				
-				item = cJSON_GetObjectItem(test_arr,"cardID");	//"cardID": "test123",
+				item = cJSON_GetObjectItem(test_arr,"cardId");	//"cardId":201910150000000500,
 				memcpy(Value,item->valuestring,strlen(item->valuestring));
 				strncpy(RechargePacket.CARD_ID ,Value,strlen(Value));
 				memset(Value,0,REC_COM_LEN);
 				
-				item = cJSON_GetObjectItem(test_arr,"rechargeAmount"); 	// "rechargeAmount": 1500,
-				JsonValue = item->valuedouble;
-				sprintf(RechargePacket.rechargeAmountIn,"%.2f",JsonValue);	
-				
-				
-				item = cJSON_GetObjectItem(test_arr,"unitPrice"); 	//"unitPrice": 1000,
+				item = cJSON_GetObjectItem(test_arr,"rechargeAmount"); 	// "rechargeAmount":1234,
 				JsonValue = item->valuedouble ;
-				sprintf(RechargePacket.unitPrice ,"%.2f",JsonValue);
+				sprintf(RechargePacket.rechargeAmountIn ,"%.2f",JsonValue);
+//				sprintf(RechargePacket.rechargeAmountIn,"%.2f",JsonValue);	
+				
+				
+				item = cJSON_GetObjectItem(test_arr,"unitPrice"); 	//unitPrice":"42226.00",
+				JsonValue = item->valuedouble ;
+				sprintf(RechargePacket.unitPrice  ,"%.2f",JsonValue);
+//				memset(Value,0,REC_COM_LEN);
+//			sprintf(RechargePacket.unitPrice ,"%.2f",JsonValue);
 
 				
-				item = cJSON_GetObjectItem(test_arr,"lpgDensity"); 						//"lpgDensity": 3.4,
+				item = cJSON_GetObjectItem(test_arr,"lpgDensity"); 						//"lpgDensity":2.525,
 				JsonValue = item->valuedouble ;
-				sprintf(RechargePacket.LPGDensity  ,"%.2f",JsonValue);
+				sprintf(RechargePacket.LPGDensity  ,"%.3f",JsonValue);
 				
-				item = cJSON_GetObjectItem(test_arr,"addOrSub");	//"addOrSub": "ADD",
+				item = cJSON_GetObjectItem(test_arr,"addOrSub");	//"addOrSub":"ADD",
 				memcpy(Value,item->valuestring,strlen(item->valuestring));
 				strncpy(RechargePacket.ADDORSUB  ,Value,strlen(Value));
 				memset(Value,0,REC_COM_LEN);
 			
 				cJSON_Delete(json);
+			}
+			else
+			{
+				printf("memory fail\r\n");
 			}
 		}	 
 		
