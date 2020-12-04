@@ -2468,6 +2468,7 @@ void StartDefaultTask(void const * argument)
 									PostMeterWarning(); 
 									PostCookingSecsion();
 									PostMeterStatus();
+									PostMeterHardware();
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
 									if(u32GetCmdValue & GET_CMD_STUP_RESPONSE)
 									{
