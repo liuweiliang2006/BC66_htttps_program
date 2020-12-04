@@ -9,6 +9,7 @@ EventGroupHandle_t xCreatedEventGroup = NULL;
 EventGroupHandle_t BC66_AT_EventGroup = NULL;
 EventGroupHandle_t BC66_AT_Deal = NULL;
 
+uint8_t AT_work_Flag = 0; //该 命令表示现在正在进行AT指令的交互工作，该位为1时，在空闲任务的勾子函数中可进行喂狗。基于HTTPS的AT指令可能会长期不给回复，在这期间应进行喂狗
 //#define SEVER_URL "https://ateei9d448.execute-api.eu-west-1.amazonaws.com/"
 //#define SEVER_VERSION "testing/"
 #define SEVER_URL "https://test.kop4.com/"
@@ -317,7 +318,10 @@ static ErrorStatus SendGetCommand()
 
 void vApplicationIdleHook( void )
 {
-	HAL_IWDG_Refresh(&hiwdg);
+	if(AT_work_Flag ==1)
+	{
+		HAL_IWDG_Refresh(&hiwdg);
+	}	
 }
 
 //向AWS发送POST请求
@@ -331,6 +335,7 @@ static ErrorStatus SendPostCommand()
 	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
 	xEventGroupClearBits( BC66_AT_EventGroup,0xffffff );
 
+	AT_work_Flag =1;
 	for(i=0;i< BC66POSTCOMMANDLEN;i++)
 	{		
 		Sim80x.AtCommand.FindAnswer = 0;
@@ -356,6 +361,7 @@ static ErrorStatus SendPostCommand()
 			break;
 		}
 	}
+	AT_work_Flag = 0;
 //	printf("send post end!\r\n");
 	if (u8ErrorFlag!=0) 
 	{

@@ -2462,15 +2462,30 @@ void StartDefaultTask(void const * argument)
 //									M26_HTTP_Init();
 //									HAL_IWDG_Refresh(&hiwdg);
 //									PostCookingSecsion();
-									/************************send meter setting require*************************************/
-									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
+									/************************send meter cmmand require*************************************/
+									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_CMD_REQUIRE);
 									GetMeterCommand();
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
+									if(u32GetCmdValue & GET_CMD_CMD_REQUIRE) //if true ,express get opera has send ,but has not recive return data.
+									{
+										xEventGroupClearBits( xCreatedEventGroup,GET_CMD_CMD_REQUIRE );
+									}
+									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
+									if(u32GetCmdValue & GET_CMD_CMD_RESPONSE)
+									{
+										xEventGroupClearBits( xCreatedEventGroup,GET_CMD_CMD_RESPONSE );
+									}
 									
 									PostCookingSecsion();
-									
+									/************************send meter setting require*************************************/
 									xEventGroupSetBits(xGetCmdEventGroup,GET_CMD_STUP_REQUIRE);
 									GetMeterSettings();
+									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
+									if(u32GetCmdValue & GET_CMD_STUP_REQUIRE) //if true ,express get opera has send ,but has not recive return data. this bit should clear by GetAnalyse function
+									{
+										xEventGroupClearBits( xCreatedEventGroup,GET_CMD_CMD_REQUIRE );
+									}
+									
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
 									if(u32GetCmdValue & GET_CMD_STUP_RESPONSE)
 									{

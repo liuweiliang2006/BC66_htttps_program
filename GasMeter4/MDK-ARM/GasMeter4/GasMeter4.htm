@@ -3,7 +3,7 @@
 <title>Static Call Graph - [GasMeter4\GasMeter4.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image GasMeter4\GasMeter4.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Dec 04 11:17:19 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Dec 04 13:10:00 2020
 <BR><P>
 <H3>Maximum Stack Usage =        880 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1341,7 +1341,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[d5]"></a>GetAnalyse</STRONG> (Thumb, 662 bytes, Stack size 80 bytes, getanalyse.o(i.GetAnalyse))
+<P><STRONG><a name="[d5]"></a>GetAnalyse</STRONG> (Thumb, 1544 bytes, Stack size 80 bytes, getanalyse.o(i.GetAnalyse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 520<LI>Call Chain = GetAnalyse &rArr; cJSON_Parse &rArr; cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
 <BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmpeq
@@ -3078,7 +3078,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.constdata)
 </UL>
-<P><STRONG><a name="[6c]"></a>StartDefaultTask</STRONG> (Thumb, 10582 bytes, Stack size 296 bytes, freertos.o(i.StartDefaultTask))
+<P><STRONG><a name="[6c]"></a>StartDefaultTask</STRONG> (Thumb, 10670 bytes, Stack size 296 bytes, freertos.o(i.StartDefaultTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 880<LI>Call Chain = StartDefaultTask &rArr; PostMeterSettings &rArr; encodeSettingsPacket &rArr; SPI_FLASH_BufferRead &rArr; SPI_FLASH_SendByte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_EndRxTxTransaction &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_test
@@ -4133,7 +4133,7 @@ Global Symbols
 <LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskPriorityInherit
 </UL>
 
-<P><STRONG><a name="[1ea]"></a>vApplicationIdleHook</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, signal.o(i.vApplicationIdleHook))
+<P><STRONG><a name="[1ea]"></a>vApplicationIdleHook</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, signal.o(i.vApplicationIdleHook))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = vApplicationIdleHook
 </UL>
 <BR>[Calls]<UL><LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_IWDG_Refresh
@@ -4639,7 +4639,7 @@ Local Symbols
 <LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMeterCommand
 </UL>
 
-<P><STRONG><a name="[e5]"></a>SendPostCommand</STRONG> (Thumb, 220 bytes, Stack size 24 bytes, signal.o(i.SendPostCommand))
+<P><STRONG><a name="[e5]"></a>SendPostCommand</STRONG> (Thumb, 230 bytes, Stack size 24 bytes, signal.o(i.SendPostCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = SendPostCommand &rArr; Sim80x_SendAtCommand &rArr; Sim80x_SendString &rArr; osDelay &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
