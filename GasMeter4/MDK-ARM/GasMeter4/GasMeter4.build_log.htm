@@ -27,77 +27,45 @@ Project File Date:  11/30/2020
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'GasMeter4_APP1'
-compiling signal.c...
+compiling freertos.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
 ../Inc/GetAnalyse.h(27): warning:  #1-D: last line of file ends without a newline
   #endif 
 ../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
   #endif
-../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
-  bool  GPRS_SetSni();
-../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
-  bool SendCookingSessionPacket();
 ../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
   #endif
 ../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
   #endif
-..\Src\signal.c(221): warning:  #940-D: missing return statement at end of non-void function "Post_Data_Cmd" 
-  }
-..\Src\signal.c(281): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
-  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
-..\Src\signal.c(327): warning:  #177-D: variable "u8Lenth"  was declared but never referenced
-  	uint8_t u8Lenth = 0;
-..\Src\signal.c(328): warning:  #177-D: variable "xResult"  was declared but never referenced
-  	BaseType_t xResult;
-..\Src\signal.c(331): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
-  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
-..\Src\signal.c(399): warning:  #177-D: variable "xResult"  was declared but never referenced
-  	BaseType_t xResult;
-..\Src\signal.c(1019): warning:  #177-D: variable "result"  was declared but never referenced
-  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
-..\Src\signal.c(1019): warning:  #177-D: variable "i"  was declared but never referenced
-  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
-..\Src\signal.c(1020): warning:  #177-D: variable "ptPost"  was declared but never referenced
-  	char *ptUrl,*ptPost;
-..\Src\signal.c(1130): warning:  #223-D: function "refreshReportStatePacket" declared implicitly
-  	refreshReportStatePacket(&reportStatePacket);		
-..\Src\signal.c(1106): warning:  #177-D: variable "result"  was declared but never referenced
-  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
-..\Src\signal.c(1106): warning:  #177-D: variable "i"  was declared but never referenced
-  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
-..\Src\signal.c(1107): warning:  #177-D: variable "ptPost"  was declared but never referenced
-  	char *ptUrl,*ptPost;
-..\Src\signal.c(1109): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(1172): warning:  #177-D: variable "ptPost"  was declared but never referenced
-  	char *ptUrl,*ptPost;
-..\Src\signal.c(1174): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(1239): warning:  #177-D: variable "ptPost"  was declared but never referenced
-  	char *ptUrl,*ptPost;
-..\Src\signal.c(1241): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(1305): warning:  #177-D: variable "ptPost"  was declared but never referenced
-  	char *ptUrl,*ptPost;
-..\Src\signal.c(1307): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(1311): warning:  #177-D: variable "stReadMeterConfig"  was declared but never referenced
-  	CONFIG_Meter_t stReadMeterConfig;
-..\Src\signal.c(1377): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(1434): warning:  #177-D: variable "cDataTime"  was declared but never referenced
-  	char *cDataTime ;
-..\Src\signal.c(207): warning:  #177-D: function "Post_Data_Cmd"  was declared but never referenced
-  static char * Post_Data_Cmd(char *postdata)
-..\Src\signal.c(224): warning:  #177-D: function "UrlLength"  was declared but never referenced
-  static void UrlLength(uint16_t length)
-..\Src\signal.c(277): warning:  #177-D: function "SendGetCommand"  was declared but never referenced
-  static ErrorStatus SendGetCommand()
-..\Src\signal.c: 32 warnings, 0 errors
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Src/freertos.c(303): warning:  #1295-D: Deprecated declaration IntoLowPower - give arg types
+  void IntoLowPower();
+../Src/freertos.c(746): warning:  #177-D: variable "test_i"  was declared but never referenced
+  		uint16_t test_i;
+../Src/freertos.c(756): warning:  #550-D: variable "Card_cap"  was set but never used
+      uint8_t Card_cap;//卡片容量
+../Src/freertos.c(772): warning:  #177-D: variable "TimeForSlowRunFree"  was declared but never referenced
+      uint32_t TimeForSlowRunFree = 0;//查询CSQ的时间
+../Src/freertos.c(775): warning:  #177-D: variable "TimeForSlowRunGPRSFree"  was declared but never referenced
+      uint32_t TimeForSlowRunGPRSFree = 0;
+../Src/freertos.c(779): warning:  #177-D: variable "pAPN"  was declared but never referenced
+      char pAPN[17];
+../Src/freertos.c(780): warning:  #177-D: variable "pAPN_UserName"  was declared but never referenced
+      char pAPN_UserName[17];
+../Src/freertos.c(781): warning:  #177-D: variable "pAPN_Password"  was declared but never referenced
+      char pAPN_Password[17];
+../Src/freertos.c: 16 warnings, 0 errors
 linking...
-Program Size: Code=92036 RO-data=1968 RW-data=916 ZI-data=26852  
+Program Size: Code=92444 RO-data=1968 RW-data=916 ZI-data=26852  
 FromELF: creating hex file...
 After Build - User command #2: fromelf --bin -o "GasMeter4\GasMeter4.bin" "GasMeter4\GasMeter4.axf"
-"GasMeter4\GasMeter4.axf" - 0 Error(s), 32 Warning(s).
+"GasMeter4\GasMeter4.axf" - 0 Error(s), 16 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -120,7 +88,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

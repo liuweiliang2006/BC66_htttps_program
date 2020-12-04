@@ -727,7 +727,7 @@ I (../Inc/gpio.h)(0x5F3361EB)
 I (../Inc/package.h)(0x5F3361EB)
 I (../Inc/rtc.h)(0x5F3361EB)
 I (../Inc/LogUtils.h)(0x5F3361EB)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Inc/includes.h)(0x5F6864B6)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
 I (../Inc/exparameter.h)(0x5F5F09ED)
@@ -2157,7 +2157,7 @@ I (../Inc/usart.h)(0x5F3361EB)
 I (../Inc/gpio.h)(0x5F3361EB)
 I (../Inc/includes.h)(0x5F6864B6)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Middlewares/Third_Party/GsmLib/Sim80x.h)(0x5FC8A843)
 I (../Middlewares/Third_Party/GsmLib/Sim80xConfig.h)(0x5F3361EB)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AD21A)
@@ -2309,7 +2309,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x5F3361EB)
-F (../Src/freertos.c)(0x5FC9A5F0)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM0 -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/BSP/Inc -I ../Middlewares/Third_Party/GsmLib -I ..\cjson-I.\RTE\_GasMeter4_APP1-IC:\Users\liuwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\liuwe\AppData\Local\Arm\Packs\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F030xC -DUSE_HAL_DRIVER -DSTM32F030xC -DAPP1-o gasmeter4\freertos.o --omf_browse gasmeter4\freertos.crf --depend gasmeter4\freertos.d)
+F (../Src/freertos.c)(0x5FC9AA3C)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM0 -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/BSP/Inc -I ../Middlewares/Third_Party/GsmLib -I ..\cjson-I.\RTE\_GasMeter4_APP1-IC:\Users\liuwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\liuwe\AppData\Local\Arm\Packs\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F030xC -DUSE_HAL_DRIVER -DSTM32F030xC -DAPP1-o gasmeter4\freertos.o --omf_browse gasmeter4\freertos.crf --depend gasmeter4\freertos.d)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x5F687212)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AD218)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AD218)
@@ -2401,7 +2401,7 @@ I (../Inc/InformationPacket.h)(0x5F586AD1)
 I (../Inc/ReplyPacket.h)(0x5F3361EB)
 I (../Inc/OpenLockPacket.h)(0x5F3361EB)
 I (../Inc/iwdg.h)(0x5F3361EB)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Inc/includes.h)(0x5F6864B6)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
 I (../Inc/exparameter.h)(0x5F5F09ED)
@@ -2671,7 +2671,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5F3361EB)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Inc/includes.h)(0x5F6864B6)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
 I (../Middlewares/Third_Party/GsmLib/Sim80x.h)(0x5FC8A843)
@@ -2794,7 +2794,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5F3361EB)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Middlewares/Third_Party/GsmLib/Sim80x.h)(0x5FC8A843)
 I (../Inc/usart.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h)(0x5F3361EB)
@@ -2869,7 +2869,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5F3361EB)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Middlewares/Third_Party/GsmLib/Sim80x.h)(0x5FC8A843)
 I (../Inc/usart.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h)(0x5F3361EB)
@@ -2944,7 +2944,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x5F3361EB)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x5F3361EB)
 I (../Inc/GetAnalyse.h)(0x5FC8878E)
-I (../Inc/signal.h)(0x5FC876BD)
+I (../Inc/signal.h)(0x5FC9A797)
 I (../Middlewares/Third_Party/GsmLib/Sim80x.h)(0x5FC8A843)
 I (../Inc/usart.h)(0x5F3361EB)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h)(0x5F3361EB)
