@@ -9,6 +9,7 @@ extern EventGroupHandle_t xGetCmdEventGroup;
 extern REAL_DATA_CALIBRATION_t REAL_DATA_CALIBRATION;
 extern REAL_Flow_CALIBRATION_t REAL_Flow_CALIBRATION;
 extern CONFIG_GPRS_t CONFIG_GPRS; 
+//extern RechargePacket_t RechargePacket;
 
 extern bool IsSaveCONFIG_Meter;
 extern bool IsSaveCONFIG_GPRS;

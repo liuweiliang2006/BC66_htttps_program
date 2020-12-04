@@ -27,8 +27,45 @@ Project File Date:  11/30/2020
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'GasMeter4_APP1'
+compiling freertos.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Src/freertos.c(303): warning:  #1295-D: Deprecated declaration IntoLowPower - give arg types
+  void IntoLowPower();
+../Src/freertos.c(746): warning:  #177-D: variable "test_i"  was declared but never referenced
+  		uint16_t test_i;
+../Src/freertos.c(756): warning:  #550-D: variable "Card_cap"  was set but never used
+      uint8_t Card_cap;//卡片容量
+../Src/freertos.c(772): warning:  #177-D: variable "TimeForSlowRunFree"  was declared but never referenced
+      uint32_t TimeForSlowRunFree = 0;//查询CSQ的时间
+../Src/freertos.c(775): warning:  #177-D: variable "TimeForSlowRunGPRSFree"  was declared but never referenced
+      uint32_t TimeForSlowRunGPRSFree = 0;
+../Src/freertos.c(779): warning:  #177-D: variable "pAPN"  was declared but never referenced
+      char pAPN[17];
+../Src/freertos.c(780): warning:  #177-D: variable "pAPN_UserName"  was declared but never referenced
+      char pAPN_UserName[17];
+../Src/freertos.c(781): warning:  #177-D: variable "pAPN_Password"  was declared but never referenced
+      char pAPN_Password[17];
+../Src/freertos.c: 16 warnings, 0 errors
+linking...
+Program Size: Code=93680 RO-data=1968 RW-data=920 ZI-data=26856  
+FromELF: creating hex file...
 After Build - User command #2: fromelf --bin -o "GasMeter4\GasMeter4.bin" "GasMeter4\GasMeter4.axf"
-"GasMeter4\GasMeter4.axf" - 0 Error(s), 0 Warning(s).
+"GasMeter4\GasMeter4.axf" - 0 Error(s), 16 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,7 +88,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

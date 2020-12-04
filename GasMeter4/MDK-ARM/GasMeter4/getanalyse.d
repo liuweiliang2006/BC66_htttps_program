@@ -69,6 +69,7 @@ gasmeter4\getanalyse.o: ../Inc/exparameter.h
 gasmeter4\getanalyse.o: ../Inc/CookingSessionReport.h
 gasmeter4\getanalyse.o: ../Inc/W25Q64.h
 gasmeter4\getanalyse.o: ../Inc/ReportStatePacket.h
+gasmeter4\getanalyse.o: ../Inc/RechargePacket.h
 gasmeter4\getanalyse.o: ../Inc/encode.h
 gasmeter4\getanalyse.o: ../Inc/WaringPacket.h
 gasmeter4\getanalyse.o: ../Inc/InformationPacket.h

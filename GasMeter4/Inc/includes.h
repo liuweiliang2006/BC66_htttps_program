@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "exparameter.h"
 #include "ReportStatePacket.h"
+#include "RechargePacket.h"
 #include "encode.h"
 #include "iwdg.h"
 #include "gas.h"

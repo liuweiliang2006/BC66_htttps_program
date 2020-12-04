@@ -33,7 +33,6 @@
 //#define	REAL_DATA_PARAM_Address     			CONFIG_Meter_Address + sizeof(CONFIG_Meter_t)	 
 //#define	REAL_DATA_Credit_Address    			REAL_DATA_PARAM_Address + sizeof(REAL_DATA_PARAM_t)
 //#define	REAL_Current_Credit_Address    		REAL_DATA_Credit_Address + sizeof(REAL_DATA_Credit_t)
-	 
 #define CONFIG_GPRS_READ()        				MB85RS16A_READ(CONFIG_GPRS_Address,(uint8_t*)(&CONFIG_GPRS),sizeof(CONFIG_GPRS_t))
 #define CONFIG_GPRS_Write()       				MB85RS16A_WRITE(CONFIG_GPRS_Address,(uint8_t*)(&CONFIG_GPRS),sizeof(CONFIG_GPRS_t))
 	

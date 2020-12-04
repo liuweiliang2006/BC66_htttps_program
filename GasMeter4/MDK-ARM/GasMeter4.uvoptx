@@ -381,7 +381,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>d</Name>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -510,6 +510,11 @@
           <count>18</count>
           <WinNumber>1</WinNumber>
           <ItemText>postdata</ItemText>
+        </Ww>
+        <Ww>
+          <count>19</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>CONFIG_GPRS</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

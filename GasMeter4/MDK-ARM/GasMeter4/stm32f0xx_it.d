@@ -72,6 +72,7 @@ gasmeter4\stm32f0xx_it.o: ../Inc/exparameter.h
 gasmeter4\stm32f0xx_it.o: ../Inc/CookingSessionReport.h
 gasmeter4\stm32f0xx_it.o: ../Inc/W25Q64.h
 gasmeter4\stm32f0xx_it.o: ../Inc/ReportStatePacket.h
+gasmeter4\stm32f0xx_it.o: ../Inc/RechargePacket.h
 gasmeter4\stm32f0xx_it.o: ../Inc/encode.h
 gasmeter4\stm32f0xx_it.o: ../Inc/WaringPacket.h
 gasmeter4\stm32f0xx_it.o: ../Inc/InformationPacket.h

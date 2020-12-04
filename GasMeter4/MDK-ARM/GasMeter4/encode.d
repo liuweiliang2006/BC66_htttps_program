@@ -69,6 +69,7 @@ gasmeter4\encode.o: ../Inc/exparameter.h
 gasmeter4\encode.o: ../Inc/CookingSessionReport.h
 gasmeter4\encode.o: ../Inc/W25Q64.h
 gasmeter4\encode.o: ../Inc/ReportStatePacket.h
+gasmeter4\encode.o: ../Inc/RechargePacket.h
 gasmeter4\encode.o: ../Inc/encode.h
 gasmeter4\encode.o: ../Inc/WaringPacket.h
 gasmeter4\encode.o: ../Inc/InformationPacket.h

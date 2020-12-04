@@ -2471,8 +2471,60 @@ void StartDefaultTask(void const * argument)
 										xEventGroupClearBits( xCreatedEventGroup,GET_CMD_CMD_REQUIRE );
 									}
 									u32GetCmdValue = xEventGroupGetBits(xGetCmdEventGroup);
-									if(u32GetCmdValue & GET_CMD_CMD_RESPONSE)
+									if(u32GetCmdValue & GET_CMD_CMD_RESPONSE) //if true,express get ADMO data  and need to write all data to flash
 									{
+                    HAL_GPIO_WritePin(BEEP_GPIO_Port,BEEP_Pin,GPIO_PIN_SET);
+                    osDelay(200);
+                    HAL_GPIO_WritePin(BEEP_GPIO_Port,BEEP_Pin,GPIO_PIN_RESET);
+
+                    RechargeToMeter(&RechargePacket);
+
+                    int16_t TmpIndex = 0;
+
+                    //如果充值的卡为当前卡,直接充值
+                    if(stringCmp(Current_Credit.CUSTOMER_ID,RechargePacket.CUSTOMER_ID,7) == PASSED
+                            && stringCmp(Current_Credit.CARD_ID,RechargePacket.CARD_ID,18) == PASSED)
+                    {
+                        Current_Credit.CurrCredit += rechargeCredit;
+                        REAL_Current_Credit_Write();
+                        Current_Credit_Write(Current_Credit);//当前表卡是需要充值的卡的时候,处理充值命令
+                    }
+                    else//如果不是这个当前卡,就需要寻找充值
+                    {
+                        if(REAL_DATA_Credit.CardTotal > 0)//寻找到直接充值,并保存
+                        {
+                            while(TmpIndex < REAL_DATA_Credit.CardTotal)
+                            {
+                                memset(&Tmp_Credit,0,sizeof(Current_Credit_t));
+                                Current_Credit_READ(TmpIndex);	//充值的时候先读取再挨个比对
+                                if(stringCmp(Tmp_Credit.CUSTOMER_ID,RechargePacket.CUSTOMER_ID,7) == PASSED
+                                        && stringCmp(Tmp_Credit.CARD_ID,RechargePacket.CARD_ID,18) == PASSED)
+                                {
+                                    Tmp_Credit.CurrCredit = Tmp_Credit.CurrCredit + rechargeCredit;
+                                    Current_Credit_Write(Tmp_Credit);//当前充值的卡不是正在使用的卡片的时候,在记录中找到了卡片
+                                    break;
+                                }
+                                TmpIndex++;
+                            }
+                        }
+                        //寻找不到新建卡
+                        if(TmpIndex == REAL_DATA_Credit.CardTotal)
+                        {
+                            memset(&Tmp_Credit,0,sizeof(Current_Credit_t));
+                            Tmp_Credit.CurrIndex = TmpIndex;
+                            Tmp_Credit.CUSTOMERNoLength = 7;
+                            strncpy(Tmp_Credit.CUSTOMER_ID,RechargePacket.CUSTOMER_ID,8);
+                            Tmp_Credit.CARDNoLength = 18;
+                            strncpy(Tmp_Credit.CARD_ID,RechargePacket.CARD_ID,19);
+
+                            Tmp_Credit.CurrCredit = rechargeCredit;
+
+                            REAL_DATA_Credit.CardTotal++;
+                            LL_VCC(1);
+                            REAL_DATA_Credit_Write();//充值中在内存中找不到卡片,新建卡片,卡片索引加一
+                            Current_Credit_Write(Tmp_Credit);//当前充值的卡不是正在使用的卡片的时候,在记录中找不到卡片
+                        }
+                    }										
 										xEventGroupClearBits( xCreatedEventGroup,GET_CMD_CMD_RESPONSE );
 									}
 									

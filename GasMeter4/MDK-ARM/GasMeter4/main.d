@@ -77,6 +77,7 @@ gasmeter4\main.o: ../Inc/exparameter.h
 gasmeter4\main.o: ../Inc/CookingSessionReport.h
 gasmeter4\main.o: ../Inc/W25Q64.h
 gasmeter4\main.o: ../Inc/ReportStatePacket.h
+gasmeter4\main.o: ../Inc/RechargePacket.h
 gasmeter4\main.o: ../Inc/encode.h
 gasmeter4\main.o: ../Inc/WaringPacket.h
 gasmeter4\main.o: ../Inc/InformationPacket.h
@@ -93,4 +94,3 @@ gasmeter4\main.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\main.o: ../Inc/StringUtils.h
 gasmeter4\main.o: ../Inc/LogUtils.h
 gasmeter4\main.o: ../Inc/usartConfig.h
-gasmeter4\main.o: ../Inc/RechargePacket.h

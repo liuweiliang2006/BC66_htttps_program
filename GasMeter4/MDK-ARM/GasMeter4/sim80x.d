@@ -77,6 +77,7 @@ gasmeter4\sim80x.o: ../Inc/exparameter.h
 gasmeter4\sim80x.o: ../Inc/CookingSessionReport.h
 gasmeter4\sim80x.o: ../Inc/W25Q64.h
 gasmeter4\sim80x.o: ../Inc/ReportStatePacket.h
+gasmeter4\sim80x.o: ../Inc/RechargePacket.h
 gasmeter4\sim80x.o: ../Inc/encode.h
 gasmeter4\sim80x.o: ../Inc/WaringPacket.h
 gasmeter4\sim80x.o: ../Inc/InformationPacket.h

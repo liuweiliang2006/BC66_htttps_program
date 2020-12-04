@@ -349,7 +349,8 @@ void encodeSettingsPacket(char **sendMeagess,SetupPacket_t *rPacket)
 	
 	MB85RS16A_READ(CONFIG_Meter_Address,(uint8_t*)(&stReadMeterConfig),sizeof(CONFIG_Meter_t));
 	MB85RS16A_READ(CONFIG_GPRS_Address,(uint8_t*)(&stReadConfigGprs),sizeof(CONFIG_GPRS_t));
-	
+//	#define CONFIG_Meter_READ()       				MB85RS16A_READ(CONFIG_Meter_Address,(uint8_t*)(&CONFIG_Meter),sizeof(CONFIG_Meter_t))
+//#define CONFIG_Meter_Write()      				MB85RS16A_WRITE(CONFIG_Meter_Address,(uint8_t*)(&CONFIG_Meter),sizeof(CONFIG_Meter_t))
 	strcat(*sendMeagess,"{\"command\":\"STUP\"");
 	strcat(*sendMeagess,",");
 	
