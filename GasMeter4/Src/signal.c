@@ -1020,20 +1020,24 @@ void  PostCookingSecsion(void)  //SendReportDataPacket
 	char *ptPostData;
 	ErrorStatus ErrorFlag;
 	char *ptMeterID;
-//	char *cDataTime ;
+	char *ptPostDataStru;
 	volatile uint16_t u8UrlLength = 0;
 
 	while(REAL_DATA_Credit.CookingSessionSendNumber < REAL_DATA_Credit.CookingSessionEnd)
 	{
-		Send_AT_cmd[8].SendCommand =(char *)malloc(20);
-		Send_AT_cmd[14].SendCommand =(char *)malloc(20);
-		memset(Send_AT_cmd[8].SendCommand,0,20 *sizeof(char));
-		memset(Send_AT_cmd[14].SendCommand,0,20 *sizeof(char));
+		Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+		Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+		memset(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+		memset(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+		
+		ptPostDataStru = (char *) malloc(1024*sizeof(char));
+		memset(ptPostDataStru,0,1024*sizeof(char));
+		
 		struSeverInfo = (struct SeverInfo *) malloc(sizeof(struct SeverInfo));
 		ptMeterID = (char *) malloc(sizeof(char)*50);
-		ptMeterID = (char *) pvPortMalloc(sizeof(char)*50);
-		ptPostData = (char *) malloc(350 *sizeof(char));
-		memset(ptPostData,0,350 *sizeof(char));
+//		ptMeterID = (char *) pvPortMalloc(sizeof(char)*50);
+		ptPostData = (char *) malloc(700 *sizeof(char));
+		memset(ptPostData,0,700 *sizeof(char));
 		
 		printf("\r\ncompare %d %d\r\n",REAL_DATA_Credit.CookingSessionSendNumber,REAL_DATA_Credit.CookingSessionEnd);
 		printf("******PostCookingSecsion******\r\n");
@@ -1041,6 +1045,7 @@ void  PostCookingSecsion(void)  //SendReportDataPacket
 		refreshCookingSessionReport(&CookingSessionReport);		
 		
 		encodeCookingPacket(&ptPostData,&CookingSessionReport); //组包 cookingsecsion POST的数据内容
+		printf("%s\r\n",ptPostData);
 		
 		struSeverInfo->Sendsever = SEVER_URL;
 		u8UrlLength = strlen(struSeverInfo->Sendsever);
@@ -1048,29 +1053,31 @@ void  PostCookingSecsion(void)  //SendReportDataPacket
 		
 		struSeverInfo->CardID = "/9088450934850394385";
 		
-		strcat(ptMeterID,"meter/cookingSession");
+		strcat(ptMeterID,"cookingSession/");
 		strcat(ptMeterID,CONFIG_Meter.MeterNo);
 		struSeverInfo->MeterId = ptMeterID;
 //		struSeverInfo->MeterId = "meter/cookingSession/TZ00000235";
 		ptUrl = Sever_Address_GET( struSeverInfo,"");
 		
-		Send_AT_cmd[9].SendCommand = ptUrl; //URL地址
+		Send_AT_cmd[URL_ADDR_ARRAY].SendCommand = ptUrl; //URL地址
 		u8UrlLength = strlen(ptUrl)-2;
-		CmdLength(u8UrlLength,9);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
+		CmdLength(u8UrlLength,25);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
 		
-		ptPost = Post_Data_Cmd( ptPostData);
-		Send_AT_cmd[15].SendCommand = ptPost;
-		u8UrlLength = strlen(ptPost)-2;
-		CmdLength(u8UrlLength,15);  //根据发送POST的长度
+		EncodePostDataStru(ptUrl,ptPostData,&ptPostDataStru);
+//		ptPost = Post_Data_Cmd( ptPostData);
+		Send_AT_cmd[POST_DATA_ARRAY].SendCommand = ptPostDataStru;
+		u8UrlLength = strlen(ptPostDataStru)-2;
+		CmdLength(strlen(ptPostDataStru)-2,27);  //根据发送POST的长度
 		
 		ErrorFlag =SendPostCommand();
 		
 		free(ptMeterID);
 		free(struSeverInfo);
 		free(ptUrl);
-		free(ptPost);
-		free(Send_AT_cmd[8].SendCommand);
-		free(Send_AT_cmd[14].SendCommand);		
+//		free(ptPost);
+		free(ptPostDataStru);
+		free(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand);
+		free(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand);		
 		free(ptPostData);
 		
 		if(ErrorFlag != ERROR)   //发送成功，将序列号加1
@@ -1099,17 +1106,22 @@ void  PostMeterStatus(void)  //SendReportStatePacket
 	char *ptPostData;
 	char *cDataTime ;
 	char *ptMeterID;
+	char *ptPostDataStru;
 	volatile uint16_t u8UrlLength = 0;	
 	
 //	M26_Sni_Init();
-	Send_AT_cmd[8].SendCommand =(char *)malloc(20);
-	Send_AT_cmd[14].SendCommand =(char *)malloc(20);
-	memset(Send_AT_cmd[8].SendCommand,0,20 *sizeof(char));
-	memset(Send_AT_cmd[14].SendCommand,0,20 *sizeof(char));
+	Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	memset(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	memset(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+
+	ptPostDataStru = (char *) malloc(1024*sizeof(char));
+	memset(ptPostDataStru,0,1024*sizeof(char));
+	
 	struSeverInfo = (struct SeverInfo *) malloc(sizeof(struct SeverInfo));
 	ptMeterID = (char *) malloc(sizeof(char)*50);
-	ptPostData = (char *) malloc(350 *sizeof(char));
-	memset(ptPostData,0,350 *sizeof(char));
+	ptPostData = (char *) malloc(700 *sizeof(char));
+	memset(ptPostData,0,700 *sizeof(char));
 	
 	printf("******PostMeterStatus******\r\n");
 	
@@ -1120,29 +1132,30 @@ void  PostMeterStatus(void)  //SendReportStatePacket
 	u8UrlLength = strlen(struSeverInfo->Sendsever);
 	struSeverInfo->SeverVer = SEVER_VERSION;
 	struSeverInfo->CardID = "";
-	strcat(ptMeterID,"meter/status/");
+	strcat(ptMeterID,"status/");
 	strcat(ptMeterID,CONFIG_Meter.MeterNo);
 	struSeverInfo->MeterId = ptMeterID;
 //	struSeverInfo->MeterId = "meter/status/TZ00000111";
 	ptUrl = Sever_Address_GET( struSeverInfo,"");
 	
-	Send_AT_cmd[9].SendCommand = ptUrl; //URL地址
+	Send_AT_cmd[URL_ADDR_ARRAY].SendCommand = ptUrl; //URL地址
 	u8UrlLength = strlen(ptUrl)-2;
-	CmdLength(u8UrlLength,9);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
+	CmdLength(u8UrlLength,25);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX,60
 	
-	ptPost = Post_Data_Cmd( ptPostData);
-	Send_AT_cmd[15].SendCommand = ptPost;
-	u8UrlLength = strlen(ptPost)-2;
-	CmdLength(u8UrlLength,15);  //根据发送POST的长度
+	EncodePostDataStru(ptUrl,ptPostData,&ptPostDataStru);
+	Send_AT_cmd[POST_DATA_ARRAY].SendCommand = ptPostDataStru;
+	u8UrlLength = strlen(ptPostDataStru)-2;
+	CmdLength(strlen(ptPostDataStru)-2,27);  //根据发送POST的长度
 	
 	SendPostCommand();
 	
 	free(ptMeterID);
 	free(struSeverInfo);
 	free(ptUrl);
-	free(ptPost);
-	free(Send_AT_cmd[8].SendCommand);
-	free(Send_AT_cmd[14].SendCommand);		
+//	free(ptPost);
+	free(ptPostDataStru);
+	free(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand);
+	free(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand);		
 	free(ptPostData);	
 	
 	printf("******end PostMeterStatus******\r\n");
