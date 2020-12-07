@@ -60,6 +60,7 @@ gasmeter4\stm32f0xx_it.o: ../Inc/includes.h
 gasmeter4\stm32f0xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 gasmeter4\stm32f0xx_it.o: ../Inc/GetAnalyse.h
 gasmeter4\stm32f0xx_it.o: ../Inc/includes.h
+gasmeter4\stm32f0xx_it.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\stm32f0xx_it.o: ../Inc/signal.h
 gasmeter4\stm32f0xx_it.o: ../Middlewares/Third_Party/GsmLib/Sim80x.h
 gasmeter4\stm32f0xx_it.o: ../Inc/usart.h

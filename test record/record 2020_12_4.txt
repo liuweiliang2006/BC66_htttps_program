@@ -1,0 +1,465 @@
+
+[09:53:54.018]收←◆Sim80x_SetPower(true)2
+
+[09:53:57.917]收←◆not func
+BU
+F1: 0000 0000
+V0: 0000 0000 [0001]
+00: 0006 000C
+01: 0000 0000
+U0: 0000 0001 [0000]
+T0: 0000 00B4
+Leaving the BROM
+
+
+[09:53:58.132]收←◆not func
+
+RDY
+
++CFUN: 1
+
+[09:53:59.071]收←◆not func
+AT
+OK
+
+[09:53:59.103]收←◆not func
+AT
+OK
+
+[09:53:59.237]收←◆not func
+ATE1
+OK
+
+[09:53:59.370]收←◆not func
+AT+IPR=115200
+OK
+
+[09:53:59.416]收←◆not func
+
++CPIN: READY
+AT+QSCLK=0
+[09:53:59.458]收←◆not func
+
+OK
+
+[09:53:59.644]收←◆not func
+AT+QBAND=4,1,3,5,8
+
+OK
+
+[09:54:01.858]收←◆not func
+AT+CPIN?
++CPIN: READY
+
+OK
+
+[09:54:04.580]收←◆not func
+AT+CSQ
++CSQ: 15,0
+
+OK
+
+[09:54:04.620]收←◆not func
+AT+CEREG?
++CEREG: 0,2
+
+OK
+[09:54:05.954]收←◆not func
+
++IP: 100.101.106.200
+
+[09:54:06.799]收←◆not func
+AT+CSQ
++CSQ: 14,0
+
+OK
+
+[09:54:06.851]收←◆not func
+AT+CEREG?
++CEREG: 0,1
+
+OK
+
+[09:54:09.155]收←◆not func
+AT+CGATT=1
+OK
+
+[09:54:09.322]收←◆not func
+AT+CGPADDRnot func
+1,100.101.106.200
+
+OK
+
+[09:54:09.377]收←◆not func
+AT+QICFG="showlength",1not func
+
+OK
+
+[09:54:10.035]收←◆send AT+QSSLCFG=1,5,"seclevel",0
+
+
+
+[09:54:10.075]收←◆AT_NO.=20,rec:AT+QSSLCFG=1,5,"seclevel",0
+
+[09:54:10.149]收←◆AT_NO.=20,rec:
+OK
+LCFG=1,5,"seclevel",0
+send AT+QSSLCFG=1,5,"sni",1
+
+
+
+[09:54:10.273]收←◆AT_NO.=21,rec:AT+QSSLCFG=1,5,"sni",1
+OK
+
+send AT+QSSLCFG=1,5,"debug",4
+
+
+
+[09:54:10.389]收←◆AT_NO.=22,rec:AT+QSSLCFG=1,5,"debug",4
+OK
+
+send AT+QHTTPCFG="ssl",1,5
+
+
+
+[09:54:10.502]收←◆AT_NO.=23,rec:AT+QHTTPCFG="ssl",1,5
+OK
+
+send AT+QHTTPCFG="requestheader",1
+
+
+
+[09:54:10.626]收←◆AT_NO.=24,rec:AT+QHTTPCFG="requestheader",1
+OK
+
+send IsNeedTimeing!
+******GetMeterCommand******
+send:25 AT+QHTTPURL=46
+
+
+
+[09:54:10.752]收←◆AT_NO.=25,rec:AT+QHTTPURL=46
+>
+
+send:26 https://test.kop4.com/meter/command/TZ00001911
+
+
+
+[09:54:10.857]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=152
+
+
+
+[09:54:10.970]收←◆AT_NO.=27,rec:AT+QHTTPPOST=152
+>
+
+send:28 GET https://test.kop4.com/meter/command/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Host:test.kop4.com
+
+
+
+
+
+
+[09:54:11.096]收←◆AT_NO.=28,rec:
+OK
+
+
+[09:54:22.078]收←◆AT_NO.=28,rec:
++QHTTPPOST: 716
+
+******end GetMeterCommand******
+******GetMeterSettings******
+send:25 AT+QHTTPURL=47
+
+
+
+[09:54:22.193]收←◆AT_NO.=25,rec:AT+QHTTPURL=47
+>
+
+send:26 https://test.kop4.com/meter/settings/TZ00001911
+
+
+
+[09:54:22.296]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=153
+
+
+
+[09:54:22.408]收←◆AT_NO.=27,rec:AT+QHTTPPOST=153
+>
+
+send:28 GET https://test.kop4.com/meter/settings/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Host:test.kop4.com
+
+
+
+
+
+
+[09:54:22.533]收←◆AT_NO.=28,rec:
+OK
+
+
+[09:54:38.374]收←◆AT_NO.=28,rec:
++QHTTPPOST: 0,200,391
+
+send:29 AT+QHTTPREAD=1024
+
+
+
+[09:54:38.459]收←◆AT_NO.=29,rec:AT+QHTTPREAD=1024
+
+[09:54:38.593]收←◆AT_NO.=29,rec:
++QHTTPREAD:
+391,0
+{"statusCode":"MeterSettingsFound-200","message":{"command":"STUP","serverIpAddress":"35.177.78.198","serverPort":5057,"serverURL":0,"gasLevel":"999.999","dataUploadPeriod":360,"warningLowBatteryVoltage":"3.70","warningLowCreditBalance":200,"warningLowGasVolumeAlarm":"1.00","meterCurrency":"TZS","uploadFrequency":360,"sensorSlope":1,"sensorIntercept":0,"settingDatestamp":"2020-12-04 0"}}
+
+
+OK
+
+******end GetMeterSettings******
+******PostMeterSettings******
+u8UrlLength = 611send:25 AT+QHTTPURL=47
+
+
+
+[09:54:38.764]收←◆AT_NO.=25,rec:AT+QHTTPURL=47
+>
+
+send:26 https://test.kop4.com/meter/settings/TZ00001911
+
+
+
+[09:54:38.866]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=611
+
+
+
+[09:54:38.989]收←◆AT_NO.=27,rec:AT+QHTTPPOST=611
+>
+
+send:28 POST https://test.kop4.com/meter/settings/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Content-Type: application/json
+Host:test.kop4.com
+Content-Length:407
+
+{"command":"STUP","serverIPaddress":"35.177.78.198","serverPort":5057,"serverURL":"https//xxxxx/xxxx","gasLevel":9800,"dataUploadPeriod":360,"warningLowBatteryVoltage":3.700000,"warningLowCreditBalance":200.000000,"warningLowGasVolumeAlarm":1.000000,"metercurrency":"TZS","uploadFrequency":360,"uploadTime":180,"sensorSlope":1.000000,"sensorIntercept":0.000000,"settingDatestamp":"2020-12-07T00:00:09.001Z"}
+
+
+
+[09:54:39.201]收←◆AT_NO.=28,rec:
+OK
+
+
+[09:54:50.184]收←◆AT_NO.=28,rec:
++QHTTPPOST: 0,201,85
+
+send:29 AT+QHTTPREAD=1024
+
+
+
+[09:54:50.268]收←◆AT_NO.=29,rec:AT+QHTTPREAD=1024
+
+[09:54:50.372]收←◆AT_NO.=29,rec:
++QHTTPREAD:
+85,0
+{"statusCode":"Data recorded-201","message":"New Record for meter TZ00001911 Added"}
+
+
+OK
+
+******end PostMeterSettings******
+******PostMeterStatus******
+send:25 AT+QHTTPURL=45
+
+
+
+[09:54:50.505]收←◆AT_NO.=25,rec:AT+QHTTPURL=45
+>
+
+send:26 https://test.kop4.com/meter/status/TZ00001911
+
+
+
+[09:54:50.606]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=480
+
+
+
+[09:54:50.698]收←◆AT_NO.=27,rec:AT+QHTTPPOST=480
+>
+
+send:28 POST https://test.kop4.com/meter/status/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Content-Type: application/json
+Host:test.kop4.com
+Content-Length:278
+
+{"batteryVoltage":4.13,"gasTemperature":25,"tankLockStatus":true,"tankSensorStatus":true,"gsmSignalIntensity":14,"needleSensorStatus":false,"lidLightSensorStatus":true,"electronicValveStatus":false,"lidElectricLockStatus":false,"meterStatusDatestamp":"2020-12-07T00:00:09.001Z"}
+
+
+
+[09:54:50.892]收←◆AT_NO.=28,rec:
+OK
+
+
+[09:55:03.583]收←◆AT_NO.=28,rec:
++QHTTPPOST: 0,201,85
+
+send:29 AT+QHTTPREAD=1024
+
+
+
+[09:55:03.668]收←◆AT_NO.=29,rec:AT+QHTTPREAD=1024
+
+[09:55:03.762]收←◆AT_NO.=29,rec:
++QHTTPREAD:
+85,0
+{"statusCode":"Data recorded-201","message":"New Record for meter TZ00001911 Added"}
+
+
+OK
+
+******end PostMeterStatus******
+******PostMeterHardware******
+CYLINDER_No : XXXXXXXXXXX
+send:25 AT+QHTTPURL=47
+
+
+
+[09:55:03.904]收←◆AT_NO.=25,rec:AT+QHTTPURL=47
+>
+
+send:26 https://test.kop4.com/meter/hardware/TZ00001911
+
+
+
+[09:55:04.007]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=518
+
+
+
+[09:55:04.120]收←◆AT_NO.=27,rec:AT+QHTTPPOST=518
+>
+
+send:28 POST https://test.kop4.com/meter/hardware/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Content-Type: application/json
+Host:test.kop4.com
+Content-Length:314
+
+{"pcbVersion":"HV5.0.191111","mcuFirmwareVersion":"1207","mcuFirmwareCompileDate":"2016-08-29T09:12:33.001Z","modemFirmwareVersion":"1752B13SIM7029E","batteryModel":"TX123","batterySerialNumberList":["BAT 18650-00208", "BAT 18650-001223"],"iflowSerialNumber":"aaa22","hardwareDatestamp":"2020-12-07T00:00:09.001Z"}
+
+
+
+[09:55:04.313]收←◆AT_NO.=28,rec:
+OK
+
+
+[09:55:14.466]收←◆AT_NO.=28,rec:
++QHTTPPOST: 0,201,85
+
+send:29 AT+QHTTPREAD=1024
+
+
+
+[09:55:14.551]收←◆AT_NO.=29,rec:AT+QHTTPREAD=1024
+
+[09:55:14.644]收←◆AT_NO.=29,rec:
++QHTTPREAD:
+85,0
+{"statusCode":"Data recorded-201","message":"New Record for meter TZ00001911 Added"}
+
+
+OK
+
+******end PostMeterHardware******
+
+[09:55:14.756]收←◆not func
+AT+CIPSHUT
+ERROR
+Sim80x_GPRSClose(0)
+not func
+AT+QSCLK=1
+[09:55:14.822]收←◆not func
+
+OK
+
+[09:55:14.855]收←◆not func
+AT+QPOWD=1not func
+
+OK
+******GetMeterFirmware******
+send:25 AT+QHTTPURL=47
+
+
+
+[10:22:03.441]收←◆AT_NO.=25,rec:AT+QHTTPURL=47
+>
+
+send:26 https://test.kop4.com/meter/firmware/TZ00001911
+
+
+
+[10:22:03.544]收←◆AT_NO.=26,rec:
+OK
+
+send:27 AT+QHTTPPOST=153
+
+
+
+[10:22:03.657]收←◆AT_NO.=27,rec:AT+QHTTPPOST=153
+>
+
+send:28 GET https://test.kop4.com/meter/firmware/TZ00001911 HTTP/1.1
+X-Locale:dev
+X-Api-Key: Qg4EIGj5piiDNVb4P7Th8cop60TJU2xmtIKwxo20
+Host:test.kop4.com
+
+
+
+
+
+
+[10:22:03.781]收←◆AT_NO.=28,rec:
+OK
+
+
+[10:22:32.114]收←◆AT_NO.=28,rec:
++QHTTPPOST: 0,200,185
+
+send:29 AT+QHTTPREAD=1024
+
+
+
+[10:22:32.199]收←◆AT_NO.=29,rec:AT+QHTTPREAD=1024
+
+[10:22:32.302]收←◆AT_NO.=29,rec:
++QHTTPREAD:
+185,0
+{"statusCode":"FirmwareFound-200","message":{"meterId":"TZ00001911","command":"UPDATE","md5":"96c588a959c4dcbb6b20161427ce7173","url":"3ekz5ha5ww6c4co0os.bin","dataTime":"2019-11-11"}}
+
+
+OK
+
+******end GetMeterFirmware******
+[09:55:15.959]收←◆IntoLowPower

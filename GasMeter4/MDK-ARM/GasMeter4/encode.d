@@ -21,9 +21,7 @@ gasmeter4\encode.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 gasmeter4\encode.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 gasmeter4\encode.o: ../Inc/GetAnalyse.h
 gasmeter4\encode.o: ../Inc/includes.h
-gasmeter4\encode.o: ../Inc/signal.h
-gasmeter4\encode.o: ../Middlewares/Third_Party/GsmLib/Sim80x.h
-gasmeter4\encode.o: ../Inc/usart.h
+gasmeter4\encode.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h
 gasmeter4\encode.o: ../Inc/stm32f0xx_hal_conf.h
 gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h
@@ -60,6 +58,9 @@ gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h
 gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h
 gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h
 gasmeter4\encode.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h
+gasmeter4\encode.o: ../Inc/signal.h
+gasmeter4\encode.o: ../Middlewares/Third_Party/GsmLib/Sim80x.h
+gasmeter4\encode.o: ../Inc/usart.h
 gasmeter4\encode.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/Cmsis_OS.h
 gasmeter4\encode.o: ../Middlewares/Third_Party/GsmLib/Sim80xConfig.h
 gasmeter4\encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

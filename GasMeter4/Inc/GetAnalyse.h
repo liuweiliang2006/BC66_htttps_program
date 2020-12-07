@@ -2,13 +2,18 @@
 #define __GETANALYSE_H
 
 #include "includes.h"
+#include "MFRC522.h"
 
 void GetCmdEventGroupCreat (void);
 void GetAnalyse(uint8_t *ptRecData);
+extern void StrToHex(byte *pbDest, char *pszSrc, int nLen);
+
 extern EventGroupHandle_t xGetCmdEventGroup;	
 extern REAL_DATA_CALIBRATION_t REAL_DATA_CALIBRATION;
 extern REAL_Flow_CALIBRATION_t REAL_Flow_CALIBRATION;
 extern CONFIG_GPRS_t CONFIG_GPRS; 
+extern update_t update;
+extern bool IsSaveUpdate;
 //extern RechargePacket_t RechargePacket;
 
 extern bool IsSaveCONFIG_Meter;

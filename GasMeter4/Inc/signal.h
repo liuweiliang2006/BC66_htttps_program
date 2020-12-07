@@ -73,6 +73,7 @@ void  PostMeterHardware(void);
 void  PostMeterSettings(void);
 void  GetMeterSettings(void);
 void  GetMeterCommand(void) ;
+void  GetMeterFirmware(void);
 /**************M26 https analysis function*********************/
 uint8_t Analysis_AT_Cmd(char *pdata);
 uint8_t Analysis_CSQ_Cmd(char *pdata);

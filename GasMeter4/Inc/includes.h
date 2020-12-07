@@ -20,6 +20,7 @@
 #include "iwdg.h"
 #include "gas.h"
 #include "MB85RS16A.h"
+#include "MFRC522.h"
 
 #include "cJSON.h"
 #endif

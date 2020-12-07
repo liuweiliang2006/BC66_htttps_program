@@ -72,6 +72,7 @@ gasmeter4\sim80x.o: ../Inc/includes.h
 gasmeter4\sim80x.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 gasmeter4\sim80x.o: ../Inc/GetAnalyse.h
 gasmeter4\sim80x.o: ../Inc/includes.h
+gasmeter4\sim80x.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\sim80x.o: ../Inc/signal.h
 gasmeter4\sim80x.o: ../Inc/exparameter.h
 gasmeter4\sim80x.o: ../Inc/CookingSessionReport.h

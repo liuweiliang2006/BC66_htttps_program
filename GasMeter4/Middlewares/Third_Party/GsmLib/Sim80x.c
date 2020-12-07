@@ -161,9 +161,9 @@ void  Sim80x_InitValue(void)
 		Sim80x_SendAtCommand("AT+QSCLK=0\r\n",200,1,"AT+QSCLK=0\r\r\nOK\r\n"); //关闭低功耗
 
 //	Sim80x_SendAtCommand("AT+QCSEARFCN\r\n",200,1,"OK\r\n");
-//	    Sim80x_SendAtCommand("AT+QBAND=4,1,3,5,8\r\n",200,1,"AT+QBAND=4,1,3,5,8\r\r\nOK\r\n"); //china
+	    Sim80x_SendAtCommand("AT+QBAND=4,1,3,5,8\r\n",200,1,"AT+QBAND=4,1,3,5,8\r\r\nOK\r\n"); //china
 	
-	Sim80x_SendAtCommand("AT+QBAND=1,20\r\n",200,1,"AT+QBAND=1,20\r\r\nOK\r\n"); //kenya
+//	Sim80x_SendAtCommand("AT+QBAND=1,20\r\n",200,1,"AT+QBAND=1,20\r\r\nOK\r\n"); //kenya
 
 	  osDelay(2000);
 	  Sim80x_SendAtCommand("AT+CPIN?\r\n",200,1,"\r\n+CPIN:");                 //查看SIM卡的状态
@@ -799,7 +799,7 @@ void  Sim80x_BufferProcess(void)
 			}
 			else if(u8ATNum == 0)
 			{
-				printf("not func\r\n");
+//				printf("not func\r\n");
 				strStart = (char*)Sim80x.UsartRxBuffer;
 				str1 = strstr(strStart,"\r\n+CGREG:");
 				str1 = strstr(strStart,"\r\n+CEREG:");//BC66 

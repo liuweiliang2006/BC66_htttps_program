@@ -2,7 +2,7 @@
 //#include "cJSON.h"
 enum {WEINA=2,WEISHENG=1}sensor_type;
 
-#define REC_COM_LEN 40  //GET数据的命令长度
+#define REC_COM_LEN 100  //GET数据的命令长度
 
 EventGroupHandle_t xGetCmdEventGroup = NULL;
 
@@ -16,6 +16,28 @@ void GetCmdEventGroupCreat (void)
 			/* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
 	}
 }
+
+
+//void StrToHex(byte *pbDest, char *pszSrc, int nLen)
+//{
+// char h1, h2;
+// byte s1, s2;
+// for (int i = 0; i < nLen; i++)
+// {
+//  h1 = pszSrc[2 * i];
+//  h2 = pszSrc[2 * i + 1];
+// 
+//  s1 = toupper(h1) - 0x30;
+//  if (s1 > 9)
+//   s1 -= 7;
+// 
+//  s2 = toupper(h2) - 0x30;
+//  if (s2 > 9)
+//   s2 -= 7;
+// 
+//  pbDest[i] = s1 * 16 + s2;
+// }
+//}
 
 //分析GET的数据内容
 void GetAnalyse(uint8_t *ptRecData)
@@ -126,7 +148,7 @@ void GetAnalyse(uint8_t *ptRecData)
 				cJSON_Delete(json);
 			}
 		}	
-/*******************************/
+/*************************************************************************************************************/
 //{
 //	"statusCode":"CommandFound-200",
 //	"message":
@@ -144,7 +166,7 @@ void GetAnalyse(uint8_t *ptRecData)
 //		"isRead":false
 //		}
 //}		
-/*****************************/		
+/*************************************************************************************************************/		
 		ptFindResult = strstr(ptStrStart,"ADMO");
 		if(ptFindResult != NULL)   //GetMeterCommand 命令解析
 		{
@@ -204,7 +226,58 @@ void GetAnalyse(uint8_t *ptRecData)
 				printf("memory fail\r\n");
 			}
 		}	 
-		
+/*************************************************************************************************************/		
+//{
+//	"statusCode":"FirmwareFound-200",
+//	"message":
+//	{
+//		"meterId":"TZ00001911",
+//		"command":"UPDATE",
+//		"md5":"96c588a959c4dcbb6b20161427ce7173",
+//		"url":"3ekz5ha5ww6c4co0os.bin",
+//		"dataTime":"2019-11-11"
+//	}
+//}		
+/*************************************************************************************************************/	
+		ptFindResult = strstr(ptStrStart,"UPDATE");
+		if(ptFindResult != NULL)   //GetMeterFirmware 命令解析
+		{ 
+			printf("UPDATE\r\n");
+			xEventGroupSetBits(xGetCmdEventGroup, GET_CMD_UPDATA_RESPONSE);
+			xEventGroupClearBits(xGetCmdEventGroup,GET_CMD_UPDATA_REQUIRE);
+			json=cJSON_Parse(ptJson); //获取整个Json大的句柄
+			if(json != NULL)
+			{
+				test_arr = cJSON_GetObjectItem(json,"message");
+				
+				item = cJSON_GetObjectItem(test_arr,"md5"); 					//"md5":"96c588a959c4dcbb6b20161427ce7173",
+				memcpy(Value,item->valuestring,strlen(item->valuestring));
+				StrToHex((byte*)update.MD5CODE,Value,16);
+				memset(Value,0,REC_COM_LEN);
+				
+				
+				CONFIG_GPRS_READ();
+				item = cJSON_GetObjectItem(test_arr,"url"); 					//"url":"3ekz5ha5ww6c4co0os.bin",
+				memcpy(Value,item->valuestring,strlen(item->valuestring));
+				memset(update.URL_ADDR,0,128);
+				strcat(update.URL_ADDR,CONFIG_GPRS.Server_IP );
+				strcat(update.URL_ADDR,":" );
+				strcat(update.URL_ADDR,CONFIG_GPRS.Socket_Port );
+				strcat(update.URL_ADDR,"/" );
+				strcat(update.URL_ADDR,Value );
+				memset(Value,0,REC_COM_LEN);
+				
+				update.BOOTFLAG=0xaa; 
+				
+				cJSON_Delete(json);
+				IsSaveUpdate = true;
+			}
+			else
+			{
+				printf("memory fail\r\n");
+			}
+		}		
+/*************************************************************************************************************/			
 	}
 	
 }

@@ -1487,3 +1487,60 @@ void  GetMeterCommand(void)  //
 	
 	printf("******end GetMeterCommand******\r\n");
 }
+
+//GetMeterFirmware 发送函数
+void  GetMeterFirmware(void)  //
+{
+	Stru_Sever_Info_t *struSeverInfo;
+//	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+	char *ptUrl;
+	char *cDataTime ;
+	volatile uint16_t u8UrlLength = 0;	
+	char *ptMeterID;
+	char *ptPostDataStru;
+	
+	Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand =(char *)malloc(20);
+	memset(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	memset(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand,0,20 *sizeof(char));
+	
+	ptPostDataStru = (char *) malloc(1024*sizeof(char));
+	memset(ptPostDataStru,0,1024*sizeof(char));
+	
+	struSeverInfo = (struct SeverInfo *) malloc(sizeof(struct SeverInfo));
+	ptMeterID = (char *) malloc(sizeof(char)*50);
+//	ptPostData = (char *) malloc(500 *sizeof(char));
+//	memset(ptPostData,0,500 *sizeof(char));
+	
+	printf("******GetMeterFirmware******\r\n");
+	
+	struSeverInfo->Sendsever = SEVER_URL;
+	u8UrlLength = strlen(struSeverInfo->Sendsever);
+	struSeverInfo->SeverVer = SEVER_VERSION;
+	struSeverInfo->CardID = ""; //此字段为空，无card_id
+	strcat(ptMeterID,"firmware/");
+	strcat(ptMeterID,CONFIG_Meter.MeterNo);
+//	struSeverInfo->MeterId = "/settings/TZ00000525";
+	struSeverInfo->MeterId = ptMeterID;
+	ptUrl = Sever_Address_GET( struSeverInfo,"");
+	
+	Send_AT_cmd[URL_ADDR_ARRAY].SendCommand = ptUrl; //URL地址
+	u8UrlLength = strlen(ptUrl)-2;
+	CmdLength(u8UrlLength,25);  //根据发送URL的长度		获取URL的长度添充AT+QHTTPURL=XX
+	
+	EncodePostDataStru(ptUrl,NULL,&ptPostDataStru);
+	Send_AT_cmd[POST_DATA_ARRAY].SendCommand = ptPostDataStru;
+	CmdLength(strlen(ptPostDataStru)-2,27);  //根据发送POST的长度
+	SendPostCommand();
+	
+	free(ptMeterID);
+	free(struSeverInfo);
+	free(ptUrl);
+//	free(ptPost);
+	free(ptPostDataStru);
+	free(Send_AT_cmd[URL_LENGTH_ARRAY].SendCommand);
+	free(Send_AT_cmd[POST_LENGTH_ARRAY].SendCommand);		
+//	free(ptPostData);	
+	
+	printf("******end GetMeterFirmware******\r\n");
+}

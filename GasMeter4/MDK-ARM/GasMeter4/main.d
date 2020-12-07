@@ -66,6 +66,7 @@ gasmeter4\main.o: ../Inc/includes.h
 gasmeter4\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 gasmeter4\main.o: ../Inc/GetAnalyse.h
 gasmeter4\main.o: ../Inc/includes.h
+gasmeter4\main.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\main.o: ../Inc/signal.h
 gasmeter4\main.o: ../Middlewares/Third_Party/GsmLib/Sim80x.h
 gasmeter4\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/Cmsis_OS.h
@@ -90,7 +91,6 @@ gasmeter4\main.o: ../Drivers/BSP/Inc/ht1621b.h
 gasmeter4\main.o: ../Drivers/BSP/Inc/lcd.h
 gasmeter4\main.o: ../Drivers/BSP/Inc/motor.h
 gasmeter4\main.o: ../Drivers/BSP/Inc/bsp_spiflash.h
-gasmeter4\main.o: ../Drivers/BSP/Inc/MFRC522.h
 gasmeter4\main.o: ../Inc/StringUtils.h
 gasmeter4\main.o: ../Inc/LogUtils.h
 gasmeter4\main.o: ../Inc/usartConfig.h
