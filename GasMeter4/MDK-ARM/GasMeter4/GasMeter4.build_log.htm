@@ -1,0 +1,517 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.29.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: A liuweiliang2006@163.com, A, LIC=9WSKC-7J0ZW-2ZQW4-FHBPI-HBEK3-RXEMY
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.29.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.29.0.0
+Dialog DLL:      DARMCM1.DLL V1.19.2.0
+Target DLL:      Segger\JL2CM3.dll V2.99.36.0
+Dialog DLL:      TARMCM1.DLL V1.14.1.0
+ 
+<h2>Project:</h2>
+D:\BC66\BC66 https pro\GasMeter4\MDK-ARM\GasMeter4.uvprojx
+Project File Date:  11/30/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'GasMeter4_APP1'
+assembling startup_stm32f030xc.s...
+compiling key.c...
+compiling ht1621b.c...
+compiling printf.c...
+compiling motor.c...
+compiling bsp_spiflash.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\Drivers\BSP\Src\bsp_spiflash.c: 2 warnings, 0 errors
+compiling lcd.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+..\Drivers\BSP\Src\lcd.c(37): warning:  #550-D: variable "IsContinue"  was set but never used
+  	bool IsContinue = true;
+..\Drivers\BSP\Src\lcd.c(246): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_num;
+..\Drivers\BSP\Src\lcd.c(269): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Signal_1;
+..\Drivers\BSP\Src\lcd.c(274): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Signal_2;
+..\Drivers\BSP\Src\lcd.c(279): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Signal_3;
+..\Drivers\BSP\Src\lcd.c(284): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Signal_4;
+..\Drivers\BSP\Src\lcd.c(289): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Signal_5;
+..\Drivers\BSP\Src\lcd.c(294): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_Bluetooth;
+..\Drivers\BSP\Src\lcd.c(299): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_RFID;
+..\Drivers\BSP\Src\lcd.c(304): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_WRAN;
+..\Drivers\BSP\Src\lcd.c(309): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_ValveW;
+..\Drivers\BSP\Src\lcd.c(314): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_ValveL;
+..\Drivers\BSP\Src\lcd.c(319): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_ValveM;
+..\Drivers\BSP\Src\lcd.c(324): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_ValveR;
+..\Drivers\BSP\Src\lcd.c(329): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_syncBig;
+..\Drivers\BSP\Src\lcd.c(334): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_syncMid;
+..\Drivers\BSP\Src\lcd.c(339): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_syncSma;
+..\Drivers\BSP\Src\lcd.c(344): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_cylinder;
+..\Drivers\BSP\Src\lcd.c(349): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_KgSign;
+..\Drivers\BSP\Src\lcd.c(354): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_MONEY;
+..\Drivers\BSP\Src\lcd.c(359): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT1;
+..\Drivers\BSP\Src\lcd.c(364): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT2;
+..\Drivers\BSP\Src\lcd.c(369): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT3;
+..\Drivers\BSP\Src\lcd.c(374): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT4;
+..\Drivers\BSP\Src\lcd.c(379): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT5;
+..\Drivers\BSP\Src\lcd.c(384): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_POINT6;
+..\Drivers\BSP\Src\lcd.c(389): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_BATS0;
+..\Drivers\BSP\Src\lcd.c(394): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_BATS1;
+..\Drivers\BSP\Src\lcd.c(399): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_BATS2;
+..\Drivers\BSP\Src\lcd.c(404): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_BATS3;
+..\Drivers\BSP\Src\lcd.c(409): warning:  #188-D: enumerated type mixed with another type
+  		Update_Type = Update_Type | Update_BATS4;
+..\Drivers\BSP\Src\lcd.c: 32 warnings, 0 errors
+compiling MFRC522.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\Drivers\BSP\Src\MFRC522.c(584): warning:  #550-D: variable "status"  was set but never used
+    uchar status;
+..\Drivers\BSP\Src\MFRC522.c: 3 warnings, 0 errors
+compiling GPRS.c...
+..\Middlewares\Third_Party\GsmLib\Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+..\Middlewares\Third_Party\GsmLib\GPRS.c: 1 warning, 0 errors
+compiling GPRSUser.c...
+..\Middlewares\Third_Party\GsmLib\Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+..\Middlewares\Third_Party\GsmLib\GPRSUser.c(77): warning:  #111-D: statement is unreachable
+      return false;
+..\Middlewares\Third_Party\GsmLib\GPRSUser.c: 2 warnings, 0 errors
+compiling GsmUser.c...
+..\Middlewares\Third_Party\GsmLib\Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+..\Middlewares\Third_Party\GsmLib\GsmUser.c: 1 warning, 0 errors
+compiling Gsm.c...
+..\Middlewares\Third_Party\GsmLib\Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+..\Middlewares\Third_Party\GsmLib\Gsm.c: 1 warning, 0 errors
+compiling ControlPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\ControlPacket.c: 2 warnings, 0 errors
+compiling Sim80xUser.c...
+..\Middlewares\Third_Party\GsmLib\Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\Middlewares\Third_Party\GsmLib\Sim80xUser.c: 2 warnings, 0 errors
+compiling Sim80x.c...
+..\Middlewares\Third_Party\GsmLib\Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Middlewares\Third_Party\GsmLib\Sim80x.c(81): warning:  #177-D: variable "i"  was declared but never referenced
+  	  uint32_t i = 0;
+..\Middlewares\Third_Party\GsmLib\Sim80x.c(155): warning:  #177-D: variable "MaxLoop"  was declared but never referenced
+  	  uint8_t MaxLoop = 10;
+..\Middlewares\Third_Party\GsmLib\Sim80x.c(156): warning:  #177-D: variable "Ishave"  was declared but never referenced
+  	  uint8_t Ishave = 0; 
+..\Middlewares\Third_Party\GsmLib\Sim80x.c: 10 warnings, 0 errors
+compiling CookingSessionReport.c...
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\CookingSessionReport.c: 3 warnings, 0 errors
+compiling CustomerCredit.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\CustomerCredit.c: 2 warnings, 0 errors
+compiling HeartbeatPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\HeartbeatPacket.c: 2 warnings, 0 errors
+compiling InformationPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\InformationPacket.c: 2 warnings, 0 errors
+compiling RechargePacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\RechargePacket.c: 2 warnings, 0 errors
+compiling ReportDataPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\ReportDataPacket.c: 2 warnings, 0 errors
+compiling package.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+..\User\package.c: 3 warnings, 0 errors
+compiling ReportStatePacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\ReportStatePacket.c: 2 warnings, 0 errors
+compiling SetupPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\SetupPacket.c: 2 warnings, 0 errors
+compiling WaringPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\WaringPacket.c: 2 warnings, 0 errors
+compiling OpenLockPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\OpenLockPacket.c: 2 warnings, 0 errors
+compiling ReplyPacket.c...
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\ReplyPacket.c: 2 warnings, 0 errors
+compiling MB85RS16A.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\MB85RS16A.c: 2 warnings, 0 errors
+compiling StringUtils.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\StringUtils.c: 2 warnings, 0 errors
+compiling LogUtils.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+..\User\LogUtils.c(135): warning:  #68-D: integer conversion resulted in a change of sign
+  				if(Log_index.LogAddr >= 0x500000 && Log_index.LogAddr != -1 && Log_index.LogAddr != 0 && Log_index.LogAddr != 100)
+..\User\LogUtils.c: 4 warnings, 0 errors
+compiling W25Q64.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\W25Q64.c: 2 warnings, 0 errors
+compiling usartConfig.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+..\User\usartConfig.c(208): warning:  #177-D: function "string_to_dec"  was declared but never referenced
+  static int32_t string_to_dec(uint8_t *buf,uint32_t len)
+..\User\usartConfig.c: 3 warnings, 0 errors
+compiling gpio.c...
+compiling main.c...
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Src/main.c: 7 warnings, 0 errors
+compiling dma.c...
+compiling adc.c...
+compiling iwdg.c...
+compiling rtc.c...
+compiling spi.c...
+compiling tim.c...
+compiling freertos.c...
+../Middlewares/Third_Party/GsmLib/Sim80X.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/StringUtils.h(35): warning:  #1295-D: Deprecated declaration GetSoftWareTime - give arg types
+  char * GetSoftWareTime();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Src/freertos.c(303): warning:  #1295-D: Deprecated declaration IntoLowPower - give arg types
+  void IntoLowPower();
+../Src/freertos.c(746): warning:  #177-D: variable "test_i"  was declared but never referenced
+  		uint16_t test_i;
+../Src/freertos.c(756): warning:  #550-D: variable "Card_cap"  was set but never used
+      uint8_t Card_cap;//卡片容量
+../Src/freertos.c(772): warning:  #177-D: variable "TimeForSlowRunFree"  was declared but never referenced
+      uint32_t TimeForSlowRunFree = 0;//查询CSQ的时间
+../Src/freertos.c(775): warning:  #177-D: variable "TimeForSlowRunGPRSFree"  was declared but never referenced
+      uint32_t TimeForSlowRunGPRSFree = 0;
+../Src/freertos.c(779): warning:  #177-D: variable "pAPN"  was declared but never referenced
+      char pAPN[17];
+../Src/freertos.c(780): warning:  #177-D: variable "pAPN_UserName"  was declared but never referenced
+      char pAPN_UserName[17];
+../Src/freertos.c(781): warning:  #177-D: variable "pAPN_Password"  was declared but never referenced
+      char pAPN_Password[17];
+../Src/freertos.c: 16 warnings, 0 errors
+compiling usart.c...
+compiling stm32f0xx_hal_msp.c...
+compiling stm32f0xx_it.c...
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Src/stm32f0xx_it.c: 7 warnings, 0 errors
+compiling stm32f0xx_hal_timebase_TIM.c...
+compiling encode.c...
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Src\encode.c: 6 warnings, 0 errors
+compiling signal.c...
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Src\signal.c(222): warning:  #940-D: missing return statement at end of non-void function "Post_Data_Cmd" 
+  }
+..\Src\signal.c(282): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
+  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
+..\Src\signal.c(331): warning:  #177-D: variable "u8Lenth"  was declared but never referenced
+  	uint8_t u8Lenth = 0;
+..\Src\signal.c(332): warning:  #177-D: variable "xResult"  was declared but never referenced
+  	BaseType_t xResult;
+..\Src\signal.c(335): warning:  #177-D: variable "u8QIDEACTSendcnt"  was declared but never referenced
+  	uint8_t u8QIDEACTSendcnt = 0; //用于记录AT+QIDEACT的次数
+..\Src\signal.c(405): warning:  #177-D: variable "xResult"  was declared but never referenced
+  	BaseType_t xResult;
+..\Src\signal.c(1025): warning:  #177-D: variable "result"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1025): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1026): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1136): warning:  #223-D: function "refreshReportStatePacket" declared implicitly
+  	refreshReportStatePacket(&reportStatePacket);		
+..\Src\signal.c(1112): warning:  #177-D: variable "result"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1112): warning:  #177-D: variable "i"  was declared but never referenced
+  	uint8_t result = 0 , i = 0; //用于标识，是否响应了当前的指令
+..\Src\signal.c(1113): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1115): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1178): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1180): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1245): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1247): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1311): warning:  #177-D: variable "ptPost"  was declared but never referenced
+  	char *ptUrl,*ptPost;
+..\Src\signal.c(1313): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1317): warning:  #177-D: variable "stReadMeterConfig"  was declared but never referenced
+  	CONFIG_Meter_t stReadMeterConfig;
+..\Src\signal.c(1383): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(1440): warning:  #177-D: variable "cDataTime"  was declared but never referenced
+  	char *cDataTime ;
+..\Src\signal.c(208): warning:  #177-D: function "Post_Data_Cmd"  was declared but never referenced
+  static char * Post_Data_Cmd(char *postdata)
+..\Src\signal.c(225): warning:  #177-D: function "UrlLength"  was declared but never referenced
+  static void UrlLength(uint16_t length)
+..\Src\signal.c(278): warning:  #177-D: function "SendGetCommand"  was declared but never referenced
+  static ErrorStatus SendGetCommand()
+..\Src\signal.c: 32 warnings, 0 errors
+compiling stm32f0xx_hal_adc_ex.c...
+compiling GetAnalyse.c...
+../Inc/GetAnalyse.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif 
+../Inc/signal.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Middlewares/Third_Party/GsmLib/Sim80x.h(413): warning:  #1295-D: Deprecated declaration GPRS_SetSni - give arg types
+  bool  GPRS_SetSni();
+../Inc/CookingSessionReport.h(43): warning:  #1295-D: Deprecated declaration SendCookingSessionPacket - give arg types
+  bool SendCookingSessionPacket();
+../Inc/exparameter.h(18): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Inc/encode.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Src\GetAnalyse.c(210): warning:  #1-D: last line of file ends without a newline
+  }
+..\Src\GetAnalyse.c(29): warning:  #177-D: variable "object"  was declared but never referenced
+  	cJSON *object;
+..\Src\GetAnalyse.c: 8 warnings, 0 errors
+compiling stm32f0xx_hal_iwdg.c...
+compiling stm32f0xx_hal_adc.c...
+compiling stm32f0xx_hal_rtc.c...
+compiling stm32f0xx_hal_rtc_ex.c...
+compiling stm32f0xx_hal_spi_ex.c...
+compiling stm32f0xx_hal_tim_ex.c...
+compiling stm32f0xx_hal_spi.c...
+compiling stm32f0xx_hal_uart.c...
+compiling stm32f0xx_hal_uart_ex.c...
+compiling stm32f0xx_hal_tim.c...
+compiling stm32f0xx_hal_rcc.c...
+compiling stm32f0xx_hal_rcc_ex.c...
+compiling stm32f0xx_hal_gpio.c...
+compiling stm32f0xx_hal_i2c_ex.c...
+compiling stm32f0xx_hal.c...
+compiling stm32f0xx_hal_dma.c...
+compiling stm32f0xx_hal_i2c.c...
+compiling stm32f0xx_hal_cortex.c...
+compiling stm32f0xx_hal_pwr.c...
+compiling heap_4.c...
+compiling croutine.c...
+compiling event_groups.c...
+compiling stm32f0xx_hal_pwr_ex.c...
+compiling stm32f0xx_hal_flash.c...
+compiling port.c...
+compiling list.c...
+compiling stm32f0xx_hal_flash_ex.c...
+compiling system_stm32f0xx.c...
+compiling queue.c...
+compiling tasks.c...
+compiling timers.c...
+compiling cJSON.c...
+compiling cmsis_os.c...
+linking...
+Program Size: Code=93716 RO-data=1968 RW-data=920 ZI-data=27880  
+FromELF: creating hex file...
+After Build - User command #2: fromelf --bin -o "GasMeter4\GasMeter4.bin" "GasMeter4\GasMeter4.axf"
+"GasMeter4\GasMeter4.axf" - 0 Error(s), 171 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
+                ARM.CMSIS.5.7.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.4.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F0xx_DFP.2.0.0.pack
+                Keil.STM32F0xx_DFP.2.0.0
+                STMicroelectronics STM32F0 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_GasMeter4_APP1
+  C:\Users\liuwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+  C:\Users\liuwe\AppData\Local\Arm\Packs\Keil\STM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.4.0
+Build Time Elapsed:  00:00:34
+</pre>
+</body>
+</html>
